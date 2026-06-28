@@ -1,6 +1,11 @@
-import { App } from './App';
 import '@/styles/main.scss';
+import { App } from './App';
 
-const app = new App();
+const root = document.createElement('div');
+root.id = 'app';
+
+document.body.prepend(root);
+
+const app = new App(root);
 
 app.init();

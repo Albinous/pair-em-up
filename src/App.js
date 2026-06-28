@@ -1,5 +1,12 @@
+import { StartScreen } from '@/screens/StartScreen';
+
 export class App {
+  constructor(root) {
+    this.root = root;
+  }
   init() {
-    console.log("Application started!");
+    const startScreen = new StartScreen();
+
+    this.root.append(startScreen.render());
   }
 }
