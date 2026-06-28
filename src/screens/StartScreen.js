@@ -5,21 +5,21 @@ export class StartScreen {
   constructor() {}
 
   render() {
-    const container = createElement('main', { className: 'main' });
+    const container = createElement('main', { classes: ['main'] });
     const title = createElement('h1', {
-      className: 'main-title',
+      classes: ['main-title'],
       text: `Pair 'em Up`,
     });
     const btnClassic = new Button({
-      className: 'mode-classic__btn',
+      classes: ['mode-classic__btn', 'btn'],
       text: 'Classic',
     }).render();
     const btnRandom = new Button({
-      className: 'mode-random__btn',
+      classes: ['mode-random__btn', 'btn'],
       text: 'Random',
     }).render();
     const btnChaotic = new Button({
-      className: 'mode-chaotic__btn',
+      classes: ['mode-chaotic__btn', 'btn'],
       text: 'Chaotic',
     }).render();
     container.append(title, btnClassic, btnRandom, btnChaotic);

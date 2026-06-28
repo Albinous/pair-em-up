@@ -1,15 +1,15 @@
 import { createElement } from '@/utils/dom';
 
 export class Button {
-  constructor({ className, text }) {
-    this.className = className;
+  constructor({ classes = [], text }) {
+    this.classNames = classes;
     this.text = text;
     this.element = null;
   }
 
   render() {
     this.element = createElement('button', {
-      className: this.className,
+      classes: this.classNames,
       text: this.text,
     });
     return this.element;

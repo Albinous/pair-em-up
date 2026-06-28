@@ -1,6 +1,6 @@
-export function createElement(tag, { className, text, id, attrs = {} } = {}) {
+export function createElement(tag, { classes = [], text, id, attrs = {} } = {}) {
   const element = document.createElement(tag);
-  if (className) element.className = className;
+  if (classes.length) element.classList.add(...classes);
   if (id) element.id = id;
   if (text) element.textContent = text;
 
