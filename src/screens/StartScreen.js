@@ -5,11 +5,8 @@ export class StartScreen {
   constructor() {}
 
   render() {
-    const container = createElement('main', { classes: ['main'] });
-    const title = createElement('h1', {
-      classes: ['main-title'],
-      text: `Pair 'em Up`,
-    });
+    const container = createElement('main', { classes: ['start-screen'] });
+    const title = this.createTitle();
     const btnClassic = new Button({
       classes: ['mode-classic__btn', 'btn'],
       text: 'Classic',
@@ -25,4 +22,13 @@ export class StartScreen {
     container.append(title, btnClassic, btnRandom, btnChaotic);
     return container;
   }
+
+  createTitle() {
+    return createElement('h1', {
+      classes: ['main-title'],
+      text: `Pair 'em Up`,
+    });
+  }
+
+  destroy() {}
 }
