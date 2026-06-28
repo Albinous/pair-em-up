@@ -1,16 +1,28 @@
+import { Button } from '@/components/Button';
+import { createElement } from '@/utils/dom';
+
 export class StartScreen {
   constructor() {}
 
   render() {
-    const container = document.createElement('main');
-    container.classList.add('main');
-    const title = document.createElement('h1');
-    title.classList.add('title');
-    title.textContent = `Pair 'em Up`;
-    const btnClassic = document.createElement('button');
-    btnClassic.classList.add('mode-classic__btn');
-    btnClassic.textContent = 'Classic';
-    container.append(title, btnClassic);
+    const container = createElement('main', { className: 'main' });
+    const title = createElement('h1', {
+      className: 'main-title',
+      text: `Pair 'em Up`,
+    });
+    const btnClassic = new Button({
+      className: 'mode-classic__btn',
+      text: 'Classic',
+    }).render();
+    const btnRandom = new Button({
+      className: 'mode-random__btn',
+      text: 'Random',
+    }).render();
+    const btnChaotic = new Button({
+      className: 'mode-chaotic__btn',
+      text: 'Chaotic',
+    }).render();
+    container.append(title, btnClassic, btnRandom, btnChaotic);
     return container;
   }
 }
