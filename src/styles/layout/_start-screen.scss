@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 30px;
 
   min-height: 100vh;
 
@@ -22,6 +23,8 @@
   text-align: center;
 
   color: $color-text-primary;
+
+  text-transform: uppercase;
 }
 
 .start-screen__accent {
@@ -45,7 +48,7 @@
 
   gap: $spacing-lg;
 
-  width: min(100%, 620px);
+  width: min(100%, 320px);
 }
 
 .start-screen__secondary {
@@ -55,6 +58,24 @@
   gap: $spacing-lg;
 
   margin-top: $spacing-lg;
+  width: min(100%, 320px);
+}
+
+.mode-classic__btn {
+  background: linear-gradient(180deg, lighten($color-classic, 6%), $color-classic);
+}
+
+.mode-random__btn {
+  background: linear-gradient(180deg, lighten($color-random, 6%), $color-random);
+}
+
+.mode-chaotic__btn {
+  background: linear-gradient(180deg, lighten($color-chaotic, 6%), $color-chaotic);
+}
+
+.secondary__btn {
+  background: $color-surface;
+  border: 1px solid $color-border;
 }
 
 .start-screen__author {
@@ -79,16 +100,4 @@
 
 .start-screen__author-link:hover {
   color: $color-primary;
-}
-
-.start-screen__classic {
-  background: linear-gradient(180deg, lighten($color-classic, 6%), $color-classic);
-}
-
-.start-screen__random {
-  background: linear-gradient(180deg, lighten($color-random, 6%), $color-random);
-}
-
-.start-screen__chaotic {
-  background: linear-gradient(180deg, lighten($color-chaotic, 6%), $color-chaotic);
 }

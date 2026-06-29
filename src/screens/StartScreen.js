@@ -32,7 +32,7 @@ export class StartScreen {
 
   createBtn(className, text) {
     return new Button({
-      classes: [`${className}__btn`, 'btn'],
+      classes: ['btn', `${className}__btn`],
       text,
     }).render();
   }
@@ -41,9 +41,9 @@ export class StartScreen {
     const container = createElement('div', { classes: ['start-screen__buttons'] });
 
     const buttons = {
-      classic: this.createBtn('start-screen__classic', 'Classic'),
-      random: this.createBtn('start-screen__random', 'Random'),
-      chaotic: this.createBtn('start-screen__chaotic', 'Chaotic'),
+      classic: this.createBtn('mode-classic', 'Classic'),
+      random: this.createBtn('mode-random', 'Random'),
+      chaotic: this.createBtn('mode-chaotic', 'Chaotic'),
     };
 
     container.append(...Object.values(buttons));
@@ -57,8 +57,8 @@ export class StartScreen {
   createSecondaryBtns() {
     const container = createElement('div', { classes: ['start-screen__secondary'] });
     const buttons = {
-      settings: this.createBtn('settings', 'Settings'),
-      results: this.createBtn('results', 'Results'),
+      settings: this.createBtn('secondary', 'Settings'),
+      results: this.createBtn('secondary', 'Results'),
     };
 
     container.append(...Object.values(buttons));
