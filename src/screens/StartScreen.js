@@ -9,6 +9,8 @@ export class StartScreen {
   render() {
     const container = createElement('main', { classes: ['start-screen'] });
     const title = this.createTitle();
+    const modeBtnsContainer = createElement('div', { classes: ['mode-btns'] });
+
     this.btnClassic = new Button({
       classes: ['mode-classic__btn', 'btn'],
       text: 'Classic',
@@ -22,6 +24,8 @@ export class StartScreen {
       text: 'Chaotic',
     }).render();
 
+    modeBtnsContainer.append(this.btnClassic, this.btnRandom, this.btnChaotic);
+
     this.btnSettings = new Button({
       classes: ['settings-btn', 'btn'],
       text: 'Settings',
@@ -30,14 +34,7 @@ export class StartScreen {
       classes: ['results-btn', 'btn'],
       text: 'Results',
     }).render();
-    container.append(
-      title,
-      this.btnClassic,
-      this.btnRandom,
-      this.btnChaotic,
-      this.btnSettings,
-      this.btnResults
-    );
+    container.append(title, modeBtnsContainer, this.btnSettings, this.btnResults);
 
     this.bindEvents();
     return container;

@@ -1,0 +1,14 @@
+@use './variables' as *;
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin button-reset {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
