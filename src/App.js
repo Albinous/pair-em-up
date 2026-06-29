@@ -8,9 +8,7 @@ export class App {
     this.root = root;
   }
   init() {
-    const startScreen = this.createStartScreen();
-
-    this.root.append(startScreen.render());
+    this.showScreen(this.createStartScreen());
   }
 
   createStartScreen() {
@@ -19,9 +17,15 @@ export class App {
         classic: () => this.showScreen(new GameScreen('Classic')),
         random: () => this.showScreen(new GameScreen('Random')),
         chaotic: () => this.showScreen(new GameScreen('Chaotic')),
-        settings: () => this.showScreen(new SettingsScreen()),
+        settings: () => this.showScreen(this.createSettingsScreen()),
         results: () => this.showScreen(this.createResultsScreen()),
       },
+    });
+  }
+
+  createSettingsScreen() {
+    return new SettingsScreen({
+      start: () => this.showScreen(this.createStartScreen()),
     });
   }
 

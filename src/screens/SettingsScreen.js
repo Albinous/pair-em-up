@@ -1,7 +1,10 @@
+import { Button } from '@/components/Button';
 import { createElement } from '@/utils/dom';
 
 export class SettingsScreen {
-  constructor() {}
+  constructor({ start }) {
+    this.start = start;
+  }
 
   render() {
     const container = createElement('main', {
@@ -10,7 +13,14 @@ export class SettingsScreen {
 
     const title = this.createTitle();
 
-    container.append(title);
+    this.backBtn = new Button({
+      classes: ['back-btn', 'btn'],
+      text: 'Back',
+    }).render();
+
+    container.append(title, this.backBtn);
+
+    this.bindEvents();
 
     return container;
   }
@@ -19,6 +29,12 @@ export class SettingsScreen {
     return createElement('h1', {
       classes: ['main-title'],
       text: `Settings`,
+    });
+  }
+
+  bindEvents() {
+    this.backBtn.addEventListener('click', () => {
+      this.start();
     });
   }
 

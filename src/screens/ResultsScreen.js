@@ -20,6 +20,8 @@ export class ResultsScreen {
 
     container.append(title, this.backBtn);
 
+    this.bindEvents();
+
     return container;
   }
 
