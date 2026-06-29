@@ -1,0 +1,45 @@
+@use '../abstracts/variables' as *;
+
+.btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 88px;
+
+  border-radius: $radius-large;
+
+  color: white;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    filter 0.2s;
+
+  box-shadow: $shadow-medium;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn__title {
+  margin-bottom: 4px;
+
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.btn__subtitle {
+  font-size: 0.95rem;
+
+  color: rgba(255, 255, 255, 0.75);
+}

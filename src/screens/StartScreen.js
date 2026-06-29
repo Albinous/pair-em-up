@@ -25,7 +25,7 @@ export class StartScreen {
 
   createTitle() {
     return createElement('h1', {
-      classes: ['main-title'],
+      classes: ['start-screen__title'],
       text: `Pair 'em Up`,
     });
   }
@@ -38,12 +38,12 @@ export class StartScreen {
   }
 
   createModeBtns() {
-    const container = createElement('div', { classes: ['mode-btns'] });
+    const container = createElement('div', { classes: ['start-screen__buttons'] });
 
     const buttons = {
-      classic: this.createBtn('mode-classic', 'Classic'),
-      random: this.createBtn('mode-random', 'Random'),
-      chaotic: this.createBtn('mode-chaotic', 'Chaotic'),
+      classic: this.createBtn('start-screen__classic', 'Classic'),
+      random: this.createBtn('start-screen__random', 'Random'),
+      chaotic: this.createBtn('start-screen__chaotic', 'Chaotic'),
     };
 
     container.append(...Object.values(buttons));
@@ -55,7 +55,7 @@ export class StartScreen {
   }
 
   createSecondaryBtns() {
-    const container = createElement('div', { classes: ['secondary-btns'] });
+    const container = createElement('div', { classes: ['start-screen__secondary'] });
     const buttons = {
       settings: this.createBtn('settings', 'Settings'),
       results: this.createBtn('results', 'Results'),
