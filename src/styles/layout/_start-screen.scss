@@ -12,21 +12,39 @@
   padding: $spacing-xl;
 
   background: $color-background;
+
+  &__title {
+    margin-bottom: $spacing-md;
+
+    font-size: $font-size-title;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-align: center;
+
+    color: $color-text-primary;
+
+    text-transform: uppercase;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+
+    gap: $spacing-lg;
+
+    width: min(100%, 320px);
+  }
+
+  &__secondary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: $spacing-lg;
+
+    margin-top: $spacing-lg;
+    width: min(100%, 320px);
+  }
 }
-
-.start-screen__title {
-  margin-bottom: $spacing-md;
-
-  font-size: $font-size-title;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-align: center;
-
-  color: $color-text-primary;
-
-  text-transform: uppercase;
-}
-
 .start-screen__accent {
   color: $color-warning;
 }
@@ -42,35 +60,16 @@
   text-align: center;
 }
 
-.start-screen__buttons {
-  display: flex;
-  flex-direction: column;
-
-  gap: $spacing-lg;
-
-  width: min(100%, 320px);
-}
-
-.start-screen__secondary {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  gap: $spacing-lg;
-
-  margin-top: $spacing-lg;
-  width: min(100%, 320px);
-}
-
-.mode-classic__btn {
-  background: linear-gradient(180deg, lighten($color-classic, 6%), $color-classic);
-}
-
-.mode-random__btn {
-  background: linear-gradient(180deg, lighten($color-random, 6%), $color-random);
-}
-
-.mode-chaotic__btn {
-  background: linear-gradient(180deg, lighten($color-chaotic, 6%), $color-chaotic);
+.mode {
+  &-classic__btn {
+    background: linear-gradient(180deg, lighten($color-classic, 6%), $color-classic);
+  }
+  &-random__btn {
+    background: linear-gradient(180deg, lighten($color-random, 6%), $color-random);
+  }
+  &-chaotic__btn {
+    background: linear-gradient(180deg, lighten($color-chaotic, 6%), $color-chaotic);
+  }
 }
 
 .secondary__btn {
