@@ -9,25 +9,15 @@ export class StartScreen {
   render() {
     const container = createElement('main', { classes: ['start-screen'] });
     const title = this.createTitle();
-    const modeBtnsContainer = createElement('div', { classes: ['mode-btns'] });
+    const modeBtns = this.createModeBtns();
+    const secondaryBtns = this.createSecondaryBtns();
 
     this.buttons = {
-      classic: this.createModeBtn('classic', 'Classic'),
-      random: this.createModeBtn('random', 'Random'),
-      chaotic: this.createModeBtn('chaotic', 'Chaotic'),
+      ...modeBtns.buttons,
+      ...secondaryBtns.buttons,
     };
 
-    modeBtnsContainer.append(...Object.values(this.buttons));
-
-    this.btnSettings = new Button({
-      classes: ['settings-btn', 'btn'],
-      text: 'Settings',
-    }).render();
-    this.btnResults = new Button({
-      classes: ['results-btn', 'btn'],
-      text: 'Results',
-    }).render();
-    container.append(title, modeBtnsContainer, this.btnSettings, this.btnResults);
+    container.append(title, modeBtns.container, secondaryBtns.container);
 
     this.bindEvents();
     return container;
@@ -40,11 +30,43 @@ export class StartScreen {
     });
   }
 
-  createModeBtn(className, text) {
+  createBtn(className, text) {
     return new Button({
-      classes: [`mode-${className}__btn`, 'btn'],
-      text: `${text}`,
+      classes: [`${className}__btn`, 'btn'],
+      text,
     }).render();
+  }
+
+  createModeBtns() {
+    const container = createElement('div', { classes: ['mode-btns'] });
+
+    const buttons = {
+      classic: this.createBtn('mode-classic', 'Classic'),
+      random: this.createBtn('mode-random', 'Random'),
+      chaotic: this.createBtn('mode-chaotic', 'Chaotic'),
+    };
+
+    container.append(...Object.values(buttons));
+
+    return {
+      container,
+      buttons,
+    };
+  }
+
+  createSecondaryBtns() {
+    const container = createElement('div', { classes: ['secondary-btns'] });
+    const buttons = {
+      settings: this.createBtn('settings', 'Settings'),
+      results: this.createBtn('results', 'Results'),
+    };
+
+    container.append(...Object.values(buttons));
+
+    return {
+      container,
+      buttons,
+    };
   }
 
   bindEvents() {
@@ -57,10 +79,10 @@ export class StartScreen {
     this.buttons.chaotic.addEventListener('click', () => {
       this.actions.chaotic();
     });
-    this.btnSettings.addEventListener('click', () => {
+    this.buttons.settings.addEventListener('click', () => {
       this.actions.settings();
     });
-    this.btnResults.addEventListener('click', () => {
+    this.buttons.results.addEventListener('click', () => {
       this.actions.results();
     });
   }
