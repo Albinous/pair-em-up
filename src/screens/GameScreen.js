@@ -1,7 +1,9 @@
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
-  constructor() {}
+  constructor(title) {
+    this.title = title;
+  }
 
   render() {
     const container = createElement('main', {
@@ -18,7 +20,7 @@ export class GameScreen {
   createTitle() {
     return createElement('h1', {
       classes: ['main-title'],
-      text: `Game`,
+      text: `${this.title}`,
     });
   }
 
