@@ -11,20 +11,13 @@ export class StartScreen {
     const title = this.createTitle();
     const modeBtnsContainer = createElement('div', { classes: ['mode-btns'] });
 
-    this.btnClassic = new Button({
-      classes: ['mode-classic__btn', 'btn'],
-      text: 'Classic',
-    }).render();
-    this.btnRandom = new Button({
-      classes: ['mode-random__btn', 'btn'],
-      text: 'Random',
-    }).render();
-    this.btnChaotic = new Button({
-      classes: ['mode-chaotic__btn', 'btn'],
-      text: 'Chaotic',
-    }).render();
+    this.buttons = {
+      classic: this.createModeBtn('classic', 'Classic'),
+      random: this.createModeBtn('random', 'Random'),
+      chaotic: this.createModeBtn('chaotic', 'Chaotic'),
+    };
 
-    modeBtnsContainer.append(this.btnClassic, this.btnRandom, this.btnChaotic);
+    modeBtnsContainer.append(...Object.values(this.buttons));
 
     this.btnSettings = new Button({
       classes: ['settings-btn', 'btn'],
@@ -47,14 +40,21 @@ export class StartScreen {
     });
   }
 
+  createModeBtn(className, text) {
+    return new Button({
+      classes: [`mode-${className}__btn`, 'btn'],
+      text: `${text}`,
+    }).render();
+  }
+
   bindEvents() {
-    this.btnClassic.addEventListener('click', () => {
+    this.buttons.classic.addEventListener('click', () => {
       this.actions.classic();
     });
-    this.btnRandom.addEventListener('click', () => {
+    this.buttons.random.addEventListener('click', () => {
       this.actions.random();
     });
-    this.btnChaotic.addEventListener('click', () => {
+    this.buttons.chaotic.addEventListener('click', () => {
       this.actions.chaotic();
     });
     this.btnSettings.addEventListener('click', () => {
