@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import { createElement } from '@/utils/dom';
+import githubIcon from '@/assets/icons/github.svg';
 
 export class StartScreen {
   constructor({ actions }) {
@@ -11,13 +12,14 @@ export class StartScreen {
     const title = this.createTitle();
     const modeBtns = this.createModeBtns();
     const secondaryBtns = this.createSecondaryBtns();
+    const author = this.createAuthor();
 
     this.buttons = {
       ...modeBtns.buttons,
       ...secondaryBtns.buttons,
     };
 
-    container.append(title, modeBtns.container, secondaryBtns.container);
+    container.append(title, modeBtns.container, secondaryBtns.container, author);
 
     this.bindEvents();
     return container;
@@ -67,6 +69,32 @@ export class StartScreen {
       container,
       buttons,
     };
+  }
+
+  createAuthor() {
+    const author = createElement('div', { classes: ['start-screen__author'], text: 'By ' });
+    const authorLink = createElement('a', {
+      classes: ['start-screen__author-link'],
+      attrs: {
+        href: 'https://github.com/Albinous',
+        target: '_blank',
+      },
+    });
+    const authorGithubIcon = createElement('img', {
+      classes: ['start-screen__author-github'],
+      attrs: {
+        src: githubIcon,
+      },
+    });
+
+    const authourLinkText = createElement('span', {
+      text: 'Albinous',
+    });
+
+    authorLink.append(authorGithubIcon, authourLinkText);
+    author.append(authorLink);
+
+    return author;
   }
 
   bindEvents() {

@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as *;
+@use 'sass:color';
 
 .start-screen {
   display: flex;
@@ -62,13 +63,21 @@
 
 .mode {
   &-classic__btn {
-    background: linear-gradient(180deg, lighten($color-classic, 6%), $color-classic);
+    background: linear-gradient(
+      180deg,
+      color.adjust($color-classic, $lightness: 6%),
+      $color-classic
+    );
   }
   &-random__btn {
-    background: linear-gradient(180deg, lighten($color-random, 6%), $color-random);
+    background: linear-gradient(180deg, color.adjust($color-random, $lightness: 6%), $color-random);
   }
   &-chaotic__btn {
-    background: linear-gradient(180deg, lighten($color-chaotic, 6%), $color-chaotic);
+    background: linear-gradient(
+      180deg,
+      color.adjust($color-chaotic, $lightness: 6%),
+      $color-chaotic
+    );
   }
 }
 
@@ -87,14 +96,25 @@
   text-align: center;
 
   opacity: 0.8;
-}
+  display: flex;
+  gap: 10px;
+  align-items: center;
 
-.start-screen__author-link {
-  font-weight: 600;
+  &-link {
+    font-weight: 600;
 
-  color: $color-text-primary;
+    color: $color-text-primary;
 
-  transition: color 0.2s;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &-github {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }
 
 .start-screen__author-link:hover {
