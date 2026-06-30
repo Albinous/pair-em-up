@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button';
 import { GameStat } from '@/components/GameStat';
+import { Header } from '@/components/Header';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -9,35 +10,23 @@ export class GameScreen {
   }
 
   render() {
-    const container = this.createContainer('main', 'game-screen');
-
-    const header = createElement('header', {
-      classes: ['game-header'],
+    const container = createElement('main', {
+      classes: ['game-screen'],
     });
-    this.backBtn = new Button({ classes: ['game-back'], text: 'Back' }).render();
 
-    const title = this.createTitle();
+    const header = new Header({ title: this.title, start: this.start }).render();
 
-    header.append(this.backBtn, title);
-
-    const subHeader = this.createContainer('div', 'game-values');
+    const subHeader = createElement('div', {
+      classes: ['game-values'],
+    });
     const timer = this.createTimer();
     const score = this.createScore();
     const moves = this.createMoves();
 
     subHeader.append(timer, score, moves);
-
     container.append(header, subHeader);
 
-    this.bindEvents();
-
     return container;
-  }
-
-  createContainer(tag, className) {
-    return createElement(`${tag}`, {
-      classes: [`${className}`],
-    });
   }
 
   createTitle() {
@@ -76,12 +65,6 @@ export class GameScreen {
     }).render();
 
     return moves;
-  }
-
-  bindEvents() {
-    this.backBtn.addEventListener('click', () => {
-      this.start();
-    });
   }
 
   destroy() {}
