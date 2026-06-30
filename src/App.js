@@ -14,12 +14,18 @@ export class App {
   createStartScreen() {
     return new StartScreen({
       actions: {
-        classic: () => this.showScreen(new GameScreen('Classic')),
-        random: () => this.showScreen(new GameScreen('Random')),
-        chaotic: () => this.showScreen(new GameScreen('Chaotic')),
+        classic: () => this.showScreen(this.createGameScreen('Classic')),
+        random: () => this.showScreen(this.createGameScreen('Random')),
+        chaotic: () => this.showScreen(this.createGameScreen('Chaotic')),
         settings: () => this.showScreen(this.createSettingsScreen()),
         results: () => this.showScreen(this.createResultsScreen()),
       },
+    });
+  }
+
+  createGameScreen(title) {
+    return new GameScreen(title, {
+      start: () => this.showScreen(this.createStartScreen()),
     });
   }
 
