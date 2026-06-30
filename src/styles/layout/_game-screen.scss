@@ -6,13 +6,23 @@
     padding: 0 $container-padding;
     margin: 0 auto;
   }
+
   &-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
   }
-  &-score {
+
+  &-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-timer,
+  &-score,
+  &-moves {
     display: flex;
     align-items: center;
     gap: 5px;
