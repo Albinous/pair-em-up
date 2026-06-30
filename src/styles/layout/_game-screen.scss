@@ -12,4 +12,9 @@
     align-items: center;
     padding: 20px 0;
   }
+  &-score {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
 }
