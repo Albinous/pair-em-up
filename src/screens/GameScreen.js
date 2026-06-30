@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button';
+import { GameStat } from '@/components/GameStat';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -47,60 +48,32 @@ export class GameScreen {
   }
 
   createScore() {
-    const score = createElement('div', {
-      classes: ['game-score'],
-    });
-    const scoreTitle = createElement('h3', {
-      classes: ['game-score__title'],
-      text: 'Score: ',
-    });
-    const scoreNumber = createElement('span', {
-      classes: ['game-score__number'],
-      text: '0',
-    });
-
-    const target = createElement('span', {
-      classes: ['game-target__number'],
-      text: '/ 100',
-    });
-
-    score.append(scoreTitle, scoreNumber, target);
+    const score = new GameStat({
+      title: 'Score: ',
+      value: '0',
+      suffix: '/ 100',
+      classes: 'game-score',
+    }).render();
 
     return score;
   }
 
   createTimer() {
-    const timer = createElement('div', {
-      classes: ['game-timer'],
-    });
-    const timerTitle = createElement('h3', {
-      classes: ['game-timer__title'],
-      text: 'Time: ',
-    });
-    const timerValue = createElement('span', {
-      classes: ['game-timer__value'],
-      text: '00:00',
-    });
-
-    timer.append(timerTitle, timerValue);
+    const timer = new GameStat({
+      title: 'Time: ',
+      value: '00:00',
+      classes: 'game-timer',
+    }).render();
 
     return timer;
   }
 
   createMoves() {
-    const moves = createElement('div', {
-      classes: ['game-moves'],
-    });
-    const movesTitle = createElement('h3', {
-      classes: ['game-moves__title'],
-      text: 'Moves: ',
-    });
-    const movesValue = createElement('span', {
-      classes: ['game-moves__value'],
-      text: '0',
-    });
-
-    moves.append(movesTitle, movesValue);
+    const moves = new GameStat({
+      title: 'Moves: ',
+      value: '0',
+      classes: 'game-moves',
+    }).render();
 
     return moves;
   }
