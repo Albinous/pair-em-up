@@ -1,6 +1,7 @@
 import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
+import { GridGenerator } from '@/game/GridGenerator';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -25,8 +26,8 @@ export class GameScreen {
 
     subHeader.append(timer, score, moves);
 
-    this.gameGrid = new Grid().render();
-    container.append(header, subHeader, this.gameGrid);
+    const gameGrid = this.createGridClassic();
+    container.append(header, subHeader, gameGrid);
 
     return container;
   }
@@ -67,6 +68,13 @@ export class GameScreen {
     }).render();
 
     return moves;
+  }
+
+  createGridClassic() {
+    const classicNumbers = new GridGenerator().generateClassicNumbers();
+    const grid = new Grid(classicNumbers).render();
+
+    return grid;
   }
 
   destroy() {}

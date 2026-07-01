@@ -1,5 +1,5 @@
 export class GridGenerator {
-  generateClassicNumber(start = 1, end = 19) {
+  generateClassicNumbers(start = 1, end = 19) {
     let numbers = [];
 
     for (let i = start; i <= end; i++) {
