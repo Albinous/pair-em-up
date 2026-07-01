@@ -4,22 +4,29 @@ import { Cell } from './Cell';
 export class Grid {
   constructor(numbers) {
     this.numbers = numbers;
+    this.cells = [];
+    this.element = null;
   }
 
   render() {
-    this.gameGrid = createElement('div', {
+    this.element = createElement('div', {
       classes: ['game-grid'],
     });
 
     this.createCells();
 
-    return this.gameGrid;
+    return this.element;
   }
 
   createCells() {
-    this.numbers.forEach((number) => {
-      const cell = new Cell(number).render();
-      this.gameGrid.append(cell);
+    this.numbers.forEach((number, index) => {
+      const cell = new Cell(index, number);
+      this.cells.push(cell);
+      this.element.append(cell.render());
     });
+  }
+
+  getCellById(id) {
+    return this.cells.find((cell) => Number(id) === cell.id);
   }
 }

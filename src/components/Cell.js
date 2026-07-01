@@ -1,16 +1,32 @@
 import { createElement } from '@/utils/dom';
 
 export class Cell {
-  constructor(value) {
+  constructor(id, value) {
+    this.id = id;
     this.value = value;
+    this.selected = false;
+    this.element = null;
   }
 
   render() {
-    const cell = createElement('div', {
+    this.element = createElement('div', {
       classes: ['game-grid__cell'],
       text: this.value,
+      attrs: {
+        'data-id': this.id,
+      },
     });
 
-    return cell;
+    return this.element;
+  }
+
+  select() {
+    this.element.classList.add('selected');
+    this.selected = true;
+  }
+
+  deselect() {
+    this.element.classList.remove('selected');
+    this.selected = false;
   }
 }

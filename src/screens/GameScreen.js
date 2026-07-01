@@ -74,21 +74,32 @@ export class GameScreen {
 
   createGridClassic() {
     const classicNumbers = new GridGenerator().generateClassicNumbers();
-    const grid = new Grid(classicNumbers).render();
+    this.grid = new Grid(classicNumbers);
 
-    return grid;
+    return this.grid.render();
   }
 
   selectCells(event) {
     const cell = event.target.closest('.game-grid__cell');
     if (!cell) return;
 
-    if (this.selectedCells.length < 2) {
-      cell.classList.toggle('selected');
-      this.selectedCells.push(cell.textContent);
+    const id = cell.dataset.id;
+    const cellObject = this.grid.getCellById(id);
+
+    if (cellObject.selected) {
+      cellObject.deselect();
+      const index = this.selectedCells.indexOf(cellObject);
+      if (index !== -1) this.selectedCells.splice(index, 1);
+      return;
     }
-    console.log(this.selectedCells);
+    cellObject.select();
+    this.selectedCells.push(cellObject);
+    if (this.selectedCells.length === 2) {
+      this.checkPair();
+    }
   }
+
+  checkPair() {}
 
   bindEvents() {
     this.gameGrid.addEventListener('click', (event) => {
