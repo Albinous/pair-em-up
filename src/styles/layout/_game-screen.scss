@@ -68,8 +68,8 @@
         color: #fff;
         border-color: #5fcf80;
       }
-      &-disabled {
-        opacity: 0.5;
+      &.disabled {
+        opacity: 0;
         pointer-events: none;
       }
     }

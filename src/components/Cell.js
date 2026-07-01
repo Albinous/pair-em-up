@@ -35,4 +35,8 @@ export class Cell {
     this.element.classList.add('matched');
     this.matched = true;
   }
+
+  hide() {
+    this.element.classList.add('disabled');
+  }
 }

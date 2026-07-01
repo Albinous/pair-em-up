@@ -2,6 +2,7 @@ import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
 import { GridGenerator } from '@/game/GridGenerator';
+import { PairValidator } from '@/game/PairValidator';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -9,6 +10,8 @@ export class GameScreen {
     this.title = title;
     this.start = start;
     this.selectedCells = [];
+    this.scoreCount = 0;
+    this.movesCount = 0;
   }
 
   render() {
@@ -42,14 +45,14 @@ export class GameScreen {
   }
 
   createScore() {
-    const score = new GameStat({
+    this.score = new GameStat({
       title: 'Score: ',
       value: '0',
       suffix: '/ 100',
       classes: 'game-score',
-    }).render();
+    });
 
-    return score;
+    return this.score.render();
   }
 
   createTimer() {
@@ -63,13 +66,13 @@ export class GameScreen {
   }
 
   createMoves() {
-    const moves = new GameStat({
+    this.moves = new GameStat({
       title: 'Moves: ',
       value: '0',
       classes: 'game-moves',
-    }).render();
+    });
 
-    return moves;
+    return this.moves.render();
   }
 
   createGridClassic() {
@@ -100,13 +103,12 @@ export class GameScreen {
   }
 
   checkPair(cell1, cell2) {
-    if (cell1.value === cell2.value) {
-      cell1.match();
-      cell2.match();
+    this.moves.setValue(++this.movesCount);
+    const pairValidator = new PairValidator(cell1, cell2).checkPair();
+    if (pairValidator) {
+      this.scoreCount++;
+      this.score.setValue(this.scoreCount);
     }
-
-    cell1.deselect();
-    cell2.deselect();
 
     this.selectedCells = [];
   }
