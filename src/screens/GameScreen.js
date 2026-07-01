@@ -1,5 +1,3 @@
-import { Button } from '@/components/Button';
-import { Cell } from '@/components/Cell';
 import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';

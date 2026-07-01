@@ -1,5 +1,6 @@
 import { createElement } from '@/utils/dom';
 import { Cell } from './Cell';
+import { GridGenerator } from '@/game/GridGenerator';
 
 export class Grid {
   constructor() {}
@@ -15,7 +16,7 @@ export class Grid {
   }
 
   createCell() {
-    const numbers = this.createClassicNumbers();
+    const numbers = new GridGenerator().generateClassicNumber();
 
     numbers.forEach((n) => {
       const cell = new Cell(n).render();
