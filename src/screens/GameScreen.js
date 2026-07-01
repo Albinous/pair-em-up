@@ -8,6 +8,7 @@ export class GameScreen {
   constructor(title, { start }) {
     this.title = title;
     this.start = start;
+    this.selectedCells = [];
   }
 
   render() {
@@ -26,9 +27,10 @@ export class GameScreen {
 
     subHeader.append(timer, score, moves);
 
-    const gameGrid = this.createGridClassic();
-    container.append(header, subHeader, gameGrid);
+    this.gameGrid = this.createGridClassic();
+    container.append(header, subHeader, this.gameGrid);
 
+    this.bindEvents();
     return container;
   }
 
@@ -75,6 +77,23 @@ export class GameScreen {
     const grid = new Grid(classicNumbers).render();
 
     return grid;
+  }
+
+  selectCells(event) {
+    const cell = event.target.closest('.game-grid__cell');
+    if (!cell) return;
+
+    if (this.selectedCells.length < 2) {
+      cell.classList.toggle('selected');
+      this.selectedCells.push(cell.textContent);
+    }
+    console.log(this.selectedCells);
+  }
+
+  bindEvents() {
+    this.gameGrid.addEventListener('click', (event) => {
+      this.selectCells(event);
+    });
   }
 
   destroy() {}

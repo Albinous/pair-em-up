@@ -57,6 +57,21 @@
       &:active {
         transform: scale(0.96);
       }
+
+      &.selected {
+        background: #4f8cff;
+        color: #fff;
+        border-color: #4f8cff;
+      }
+      &-matched {
+        background: #5fcf80;
+        color: #fff;
+        border-color: #5fcf80;
+      }
+      &-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     }
   }
 }

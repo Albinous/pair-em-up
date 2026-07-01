@@ -1,6 +1,5 @@
 import { createElement } from '@/utils/dom';
 import { Cell } from './Cell';
-import { GridGenerator } from '@/game/GridGenerator';
 
 export class Grid {
   constructor(numbers) {
