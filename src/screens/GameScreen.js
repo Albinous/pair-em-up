@@ -1,5 +1,7 @@
 import { Button } from '@/components/Button';
+import { Cell } from '@/components/Cell';
 import { GameStat } from '@/components/GameStat';
+import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
 import { createElement } from '@/utils/dom';
 
@@ -24,7 +26,9 @@ export class GameScreen {
     const moves = this.createMoves();
 
     subHeader.append(timer, score, moves);
-    container.append(header, subHeader);
+
+    this.gameGrid = new Grid().render();
+    container.append(header, subHeader, this.gameGrid);
 
     return container;
   }
