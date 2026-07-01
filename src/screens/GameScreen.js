@@ -95,11 +95,21 @@ export class GameScreen {
     cellObject.select();
     this.selectedCells.push(cellObject);
     if (this.selectedCells.length === 2) {
-      this.checkPair();
+      this.checkPair(this.selectedCells[0], this.selectedCells[1]);
     }
   }
 
-  checkPair() {}
+  checkPair(cell1, cell2) {
+    if (cell1.value === cell2.value) {
+      cell1.match();
+      cell2.match();
+    }
+
+    cell1.deselect();
+    cell2.deselect();
+
+    this.selectedCells = [];
+  }
 
   bindEvents() {
     this.gameGrid.addEventListener('click', (event) => {

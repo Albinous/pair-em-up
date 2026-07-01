@@ -5,6 +5,7 @@ export class Cell {
     this.id = id;
     this.value = value;
     this.selected = false;
+    this.matched = false;
     this.element = null;
   }
 
@@ -28,5 +29,10 @@ export class Cell {
   deselect() {
     this.element.classList.remove('selected');
     this.selected = false;
+  }
+
+  match() {
+    this.element.classList.add('matched');
+    this.matched = true;
   }
 }
