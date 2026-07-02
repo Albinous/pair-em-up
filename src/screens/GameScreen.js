@@ -104,7 +104,7 @@ export class GameScreen {
 
   checkPair(cell1, cell2) {
     this.moves.setValue(++this.movesCount);
-    const pairValidator = new PairValidator(cell1, cell2).checkPair();
+    const pairValidator = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
     if (pairValidator) {
       this.scoreCount++;
       this.score.setValue(this.scoreCount);

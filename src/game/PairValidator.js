@@ -1,5 +1,6 @@
 export class PairValidator {
-  constructor(cell1, cell2) {
+  constructor(cells, cell1, cell2) {
+    this.cells = cells;
     this.cell1 = cell1;
     this.cell2 = cell2;
   }
@@ -13,13 +14,40 @@ export class PairValidator {
     const isAdjacentHorizontal = this.cell1.row === this.cell2.row && colDistance === 1;
     const isAdjacent = isAdjacentVertical || isAdjacentHorizontal;
 
+    const isSameRow = this.cell1.row === this.cell2.row && colDistance !== 1;
+
     if (!isSumTen && !isEqual) {
       return this.invalidPair();
     }
-    if (!isAdjacent) {
+    if (isAdjacent) {
+      return this.validPair();
+    }
+
+    if (isSameRow) {
+      if (this.isEmptyCells(this.cells)) {
+        return this.validPair();
+      }
+
       return this.invalidPair();
     }
 
+    return this.invalidPair();
+  }
+
+  isEmptyCells(cells) {
+    const minCol = Math.min(this.cell1.id, this.cell2.id);
+    const maxCol = Math.max(this.cell1.id, this.cell2.id);
+
+    for (let i = minCol + 1; i < maxCol; i++) {
+      const nextCol = cells.find((cell) => cell.id === i);
+      if (nextCol.matched === false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  validPair() {
     this.cell1.match();
     this.cell2.match();
 
