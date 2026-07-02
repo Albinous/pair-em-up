@@ -25,7 +25,7 @@ export class PairValidator {
     }
 
     if (isSameRow) {
-      if (this.isEmptyCells(this.cells, 1)) {
+      if (this.isEmptyCells(this.cells, 1, this.leftCell(), this.rightCell())) {
         return this.validPair();
       }
 
@@ -33,27 +33,49 @@ export class PairValidator {
     }
 
     if (isSameCol) {
-      if (this.isEmptyCells(this.cells, 9)) {
+      if (this.isEmptyCells(this.cells, 9, this.leftCell(), this.rightCell())) {
         return this.validPair();
       }
 
       return this.invalidPair();
     }
 
+    if (this.isRowBoundary()) {
+      return this.validPair();
+    }
+
     return this.invalidPair();
   }
 
-  isEmptyCells(cells, step) {
-    const minCol = Math.min(this.cell1.id, this.cell2.id);
-    const maxCol = Math.max(this.cell1.id, this.cell2.id);
-
-    for (let i = minCol + step; i < maxCol; i += step) {
-      const nextCol = cells[i];
-      if (nextCol.matched === false) {
+  isEmptyCells(cells, step, start, end) {
+    for (let i = start + step; i < end; i += step) {
+      const nextCell = cells[i];
+      if (!nextCell.matched) {
         return false;
       }
     }
     return true;
+  }
+
+  isRowBoundary() {
+    const endRow = (Math.min(this.cell1.row, this.cell2.row) + 1) * 9;
+    const startRow = (Math.max(this.cell1.row, this.cell2.row) + 1) * 8;
+    const lastNumberOfRow = this.isEmptyCells(this.cells, 1, this.firstCell, endRow);
+    const firstNumberOfRow = this.isEmptyCells(this.cells, 1, startRow, this.secondCell);
+
+    if (lastNumberOfRow && firstNumberOfRow) {
+      return this.isEmptyCells(this.cells, 1, this.leftCell(), this.rightCell());
+    }
+
+    return false;
+  }
+
+  leftCell() {
+    return Math.min(this.cell1.id, this.cell2.id);
+  }
+
+  rightCell() {
+    return Math.max(this.cell1.id, this.cell2.id);
   }
 
   validPair() {
