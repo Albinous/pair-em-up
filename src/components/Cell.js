@@ -1,9 +1,11 @@
 import { createElement } from '@/utils/dom';
 
 export class Cell {
-  constructor(id, value) {
+  constructor(id, value, row, col) {
     this.id = id;
     this.value = value;
+    this.row = row;
+    this.col = col;
     this.selected = false;
     this.matched = false;
     this.element = null;
