@@ -5,9 +5,25 @@ export class PairValidator {
     this.cell2 = cell2;
   }
   checkPair() {
+    const isFivePlus = this.cell1.value === 5 && this.cell2.value === 5;
     const isSumTen = this.cell1.value + this.cell2.value === 10;
     const isEqual = this.cell1.value === this.cell2.value;
 
+    const pairType = isFivePlus ? 'fivePlus' : isSumTen ? 'sumTen' : isEqual ? 'equal' : null;
+
+    if (!pairType) {
+      return this.invalidPair();
+    }
+
+    if (!this.canConnect()) {
+      return this.invalidPair();
+    }
+
+    this.validPair();
+    return pairType;
+  }
+
+  canConnect() {
     const rowDistance = Math.abs(this.cell2.row - this.cell1.row);
     const colDistance = Math.abs(this.cell2.col - this.cell1.col);
     const isAdjacentVertical = this.cell1.col === this.cell2.col && rowDistance === 1;
@@ -17,26 +33,12 @@ export class PairValidator {
     const isSameRow = this.cell1.row === this.cell2.row && colDistance !== 1;
     const isSameCol = this.cell1.col === this.cell2.col && rowDistance !== 1;
 
-    if (!isSumTen && !isEqual) {
-      return this.invalidPair();
-    }
-    if (isAdjacent) {
-      return this.validPair();
-    }
-
-    if (isSameRow && this.isConnected(1)) {
-      return this.validPair();
-    }
-
-    if (isSameCol && this.isConnected(9)) {
-      return this.validPair();
-    }
-
-    if (this.isRowBoundary()) {
-      return this.validPair();
-    }
-
-    return this.invalidPair();
+    return (
+      isAdjacent ||
+      (isSameRow && this.isConnected(1)) ||
+      (isSameCol && this.isConnected(9)) ||
+      this.isRowBoundary()
+    );
   }
 
   isEmptyCells(step, start, end) {
