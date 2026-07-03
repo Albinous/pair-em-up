@@ -25,7 +25,7 @@ export class PairValidator {
     }
 
     if (isSameRow) {
-      if (this.isEmptyCells(this.cells, 1, this.leftCell(), this.rightCell())) {
+      if (this.isEmptyCells(1, this.leftCell(), this.rightCell())) {
         return this.validPair();
       }
 
@@ -33,7 +33,7 @@ export class PairValidator {
     }
 
     if (isSameCol) {
-      if (this.isEmptyCells(this.cells, 9, this.leftCell(), this.rightCell())) {
+      if (this.isEmptyCells(9, this.leftCell(), this.rightCell())) {
         return this.validPair();
       }
 
@@ -47,9 +47,9 @@ export class PairValidator {
     return this.invalidPair();
   }
 
-  isEmptyCells(cells, step, start, end) {
+  isEmptyCells(step, start, end) {
     for (let i = start + step; i < end; i += step) {
-      const nextCell = cells[i];
+      const nextCell = this.cells[i];
       if (!nextCell.matched) {
         return false;
       }
@@ -62,8 +62,8 @@ export class PairValidator {
     const startRow = (Math.max(this.cell1.row, this.cell2.row) + 1) * 8;
     const leftId = this.leftCell();
     const rightId = this.rightCell();
-    const lastNumberOfRow = this.isEmptyCells(this.cells, 1, leftId, endRow);
-    const firstNumberOfRow = this.isEmptyCells(this.cells, 1, startRow, rightId);
+    const lastNumberOfRow = this.isEmptyCells(1, leftId, endRow);
+    const firstNumberOfRow = this.isEmptyCells(1, startRow, rightId);
 
     return lastNumberOfRow && firstNumberOfRow;
   }
