@@ -24,20 +24,12 @@ export class PairValidator {
       return this.validPair();
     }
 
-    if (isSameRow) {
-      if (this.isEmptyCells(1, this.leftCell(), this.rightCell())) {
-        return this.validPair();
-      }
-
-      return this.invalidPair();
+    if (isSameRow && this.isConnected(1)) {
+      return this.validPair();
     }
 
-    if (isSameCol) {
-      if (this.isEmptyCells(9, this.leftCell(), this.rightCell())) {
-        return this.validPair();
-      }
-
-      return this.invalidPair();
+    if (isSameCol && this.isConnected(9)) {
+      return this.validPair();
     }
 
     if (this.isRowBoundary()) {
@@ -55,6 +47,10 @@ export class PairValidator {
       }
     }
     return true;
+  }
+
+  isConnected(step) {
+    this.isEmptyCells(step, this.leftCell(), this.rightCell());
   }
 
   isRowBoundary() {
