@@ -15,7 +15,6 @@ export class ScoreManager {
         this.score += 1;
         break;
     }
-    console.log(this.score);
 
     return this.score;
   }

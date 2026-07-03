@@ -108,7 +108,6 @@ export class GameScreen {
     const pairType = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
     const scoreValue = this.scoreManager.scoreCounter(pairType);
     this.score.setValue(scoreValue);
-    console.log(scoreValue);
 
     this.selectedCells = [];
   }

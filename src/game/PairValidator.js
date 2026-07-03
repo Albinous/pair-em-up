@@ -57,13 +57,16 @@ export class PairValidator {
 
   isRowBoundary() {
     const endRow = (Math.min(this.cell1.row, this.cell2.row) + 1) * 9;
-    const startRow = (Math.max(this.cell1.row, this.cell2.row) + 1) * 8;
+    const startRow = Math.max(this.cell1.row, this.cell2.row) * 9 - 1;
     const leftId = this.leftCell();
     const rightId = this.rightCell();
     const lastNumberOfRow = this.isEmptyCells(1, leftId, endRow);
     const firstNumberOfRow = this.isEmptyCells(1, startRow, rightId);
+    if (lastNumberOfRow && firstNumberOfRow) {
+      return this.isEmptyCells(1, endRow, startRow);
+    }
 
-    return lastNumberOfRow && firstNumberOfRow;
+    return false;
   }
 
   leftCell() {
