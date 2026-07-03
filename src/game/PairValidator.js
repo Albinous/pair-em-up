@@ -52,7 +52,7 @@ export class PairValidator {
   }
 
   isConnected(step) {
-    this.isEmptyCells(step, this.leftCell(), this.rightCell());
+    return this.isEmptyCells(step, this.leftCell(), this.rightCell());
   }
 
   isRowBoundary() {

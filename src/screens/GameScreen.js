@@ -3,6 +3,7 @@ import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
 import { GridGenerator } from '@/game/GridGenerator';
 import { PairValidator } from '@/game/PairValidator';
+import { ScoreManager } from '@/game/ScoreManager';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -10,7 +11,7 @@ export class GameScreen {
     this.title = title;
     this.start = start;
     this.selectedCells = [];
-    this.scoreCount = 0;
+    this.scoreManager = new ScoreManager();
     this.movesCount = 0;
   }
 
@@ -104,11 +105,10 @@ export class GameScreen {
 
   checkPair(cell1, cell2) {
     this.moves.setValue(++this.movesCount);
-    const pairValidator = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
-    if (pairValidator) {
-      this.scoreCount++;
-      this.score.setValue(this.scoreCount);
-    }
+    const pairType = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
+    const scoreValue = this.scoreManager.scoreCounter(pairType);
+    this.score.setValue(scoreValue);
+    console.log(scoreValue);
 
     this.selectedCells = [];
   }
