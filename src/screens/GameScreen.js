@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { GridGenerator } from '@/game/GridGenerator';
 import { PairValidator } from '@/game/PairValidator';
 import { ScoreManager } from '@/game/ScoreManager';
+import { TimerManager } from '@/game/Timer';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
@@ -12,6 +13,7 @@ export class GameScreen {
     this.start = start;
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
+    this.timerManager = new TimerManager();
     this.movesCount = 0;
   }
 
@@ -33,6 +35,7 @@ export class GameScreen {
 
     this.gameGrid = this.createGridClassic();
     container.append(header, subHeader, this.gameGrid);
+    this.timerManager.start(this.timer);
 
     this.bindEvents();
     return container;
@@ -57,13 +60,13 @@ export class GameScreen {
   }
 
   createTimer() {
-    const timer = new GameStat({
+    this.timer = new GameStat({
       title: 'Time: ',
       value: '00:00',
       classes: 'game-timer',
-    }).render();
+    });
 
-    return timer;
+    return this.timer.render();
   }
 
   createMoves() {
