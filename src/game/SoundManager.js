@@ -1,11 +1,17 @@
+import selectSound from '@/assets/sounds/select.mp3';
+import errorSound from '@/assets/sounds/error.mp3';
+import successSound from '@/assets/sounds/success.mp3';
+import winSound from '@/assets/sounds/win.mp3';
+import overSound from '@/assets/sounds/game-over.mp3';
+
 export class SoundManager {
   constructor() {
     this.sounds = {
-      click: new Audio('assets/sounds/select.mp3'),
-      error: new Audio('assets/sounds/error.mp3'),
-      success: new Audio('assets/sounds/success.mp3'),
-      win: new Audio('assets/sounds/win.mp3'),
-      over: new Audio('assets/sounds/game-over.mp3'),
+      click: new Audio(selectSound),
+      error: new Audio(errorSound),
+      success: new Audio(successSound),
+      win: new Audio(winSound),
+      over: new Audio(overSound),
     };
   }
 

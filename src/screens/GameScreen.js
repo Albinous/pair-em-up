@@ -4,6 +4,7 @@ import { Header } from '@/components/Header';
 import { GridGenerator } from '@/game/GridGenerator';
 import { PairValidator } from '@/game/PairValidator';
 import { ScoreManager } from '@/game/ScoreManager';
+import { SoundManager } from '@/game/SoundManager';
 import { TimerManager } from '@/game/Timer';
 import { createElement } from '@/utils/dom';
 
@@ -14,6 +15,7 @@ export class GameScreen {
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
+    this.soundManager = new SoundManager();
     this.movesCount = 0;
   }
 
@@ -100,6 +102,7 @@ export class GameScreen {
       return;
     }
     cellObject.select();
+    this.soundManager.playSound('click');
     this.selectedCells.push(cellObject);
     if (this.selectedCells.length === 2) {
       this.checkPair(this.selectedCells[0], this.selectedCells[1]);
@@ -109,6 +112,9 @@ export class GameScreen {
   checkPair(cell1, cell2) {
     this.moves.setValue(++this.movesCount);
     const pairType = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
+
+    pairType ? this.soundManager.playSound('success') : this.soundManager.playSound('error');
+
     const scoreValue = this.scoreManager.scoreCounter(pairType);
     this.score.setValue(scoreValue);
 
