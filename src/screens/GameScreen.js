@@ -112,7 +112,6 @@ export class GameScreen {
   checkPair(cell1, cell2) {
     this.moves.setValue(++this.movesCount);
     const pairType = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
-
     pairType ? this.soundManager.playSound('success') : this.soundManager.playSound('error');
 
     const scoreValue = this.scoreManager.scoreCounter(pairType);

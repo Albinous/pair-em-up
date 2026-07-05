@@ -1,3 +1,5 @@
+import { formatTime } from '@/utils/formatTime';
+
 export class TimerManager {
   constructor() {
     this.startTime = 0;
@@ -19,12 +21,8 @@ export class TimerManager {
 
     let minutes = Math.floor((this.elapsedTime / (1000 * 60)) % 60);
     let seconds = Math.floor((this.elapsedTime / 1000) % 60);
-    minutes = this.formatTime(minutes);
-    seconds = this.formatTime(seconds);
+    minutes = formatTime(minutes);
+    seconds = formatTime(seconds);
     timer.setValue(`${minutes}:${seconds}`);
-  }
-
-  formatTime(time) {
-    return String(time).padStart(2, '0');
   }
 }
