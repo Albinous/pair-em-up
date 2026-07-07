@@ -93,7 +93,7 @@ export class GameScreen {
 
   createAssistBtns() {
     const container = createElement('div', {
-      classes: ['assist-btns'],
+      classes: ['game-assist__btns'],
     });
 
     this.assistBtns = {
@@ -111,7 +111,7 @@ export class GameScreen {
 
   createAssistBtn(name) {
     const btn = new Button({
-      classes: `game-assist__btn`,
+      classes: ['game-assist__btn'],
       text: name,
     }).render();
 

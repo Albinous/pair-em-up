@@ -74,4 +74,13 @@
       }
     }
   }
+
+  &-assist {
+    &__btns {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+    }
+  }
 }
