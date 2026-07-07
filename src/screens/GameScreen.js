@@ -1,3 +1,4 @@
+import { Button } from '@/components/Button';
 import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
@@ -32,12 +33,14 @@ export class GameScreen {
     const timer = this.createTimer();
     const score = this.createScore();
     const moves = this.createMoves();
+    this.timerManager.start(this.timer);
 
     subHeader.append(timer, score, moves);
 
     this.gameGrid = this.createGridClassic();
-    container.append(header, subHeader, this.gameGrid);
-    this.timerManager.start(this.timer);
+    const assistBtns = this.createAssistBtns();
+
+    container.append(header, subHeader, this.gameGrid, assistBtns);
 
     this.bindEvents();
     return container;
@@ -86,6 +89,33 @@ export class GameScreen {
     this.grid = new Grid(classicNumbers);
 
     return this.grid.render();
+  }
+
+  createAssistBtns() {
+    const container = createElement('div', {
+      classes: ['assist-btns'],
+    });
+
+    this.assistBtns = {
+      hint: this.createAssistBtn('hint'),
+      revert: this.createAssistBtn('revert'),
+      addNumbers: this.createAssistBtn('add-numbers'),
+      shuffle: this.createAssistBtn('shuffle'),
+      eraser: this.createAssistBtn('eraser'),
+    };
+
+    container.append(...Object.values(this.assistBtns));
+
+    return container;
+  }
+
+  createAssistBtn(name) {
+    const btn = new Button({
+      classes: `game-assist__btn`,
+      text: name,
+    }).render();
+
+    return btn;
   }
 
   selectCells(event) {
