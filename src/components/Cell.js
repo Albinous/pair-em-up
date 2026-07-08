@@ -41,4 +41,8 @@ export class Cell {
   hide() {
     this.element.classList.add('disabled');
   }
+
+  showHint() {
+    this.element.classList.add('hint');
+  }
 }

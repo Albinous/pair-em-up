@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
+import { AssistManager } from '@/game/AssistManager';
 import { GridGenerator } from '@/game/GridGenerator';
 import { PairValidator } from '@/game/PairValidator';
 import { ScoreManager } from '@/game/ScoreManager';
@@ -38,6 +39,7 @@ export class GameScreen {
     subHeader.append(timer, score, moves);
 
     this.gameGrid = this.createGridClassic();
+
     const assistBtns = this.createAssistBtns();
 
     container.append(header, subHeader, this.gameGrid, assistBtns);
@@ -105,6 +107,7 @@ export class GameScreen {
     };
 
     container.append(...Object.values(this.assistBtns));
+    this.assistManager = new AssistManager(this.grid.cells);
 
     return container;
   }
@@ -141,8 +144,17 @@ export class GameScreen {
 
   checkPair(cell1, cell2) {
     this.moves.setValue(++this.movesCount);
-    const pairType = new PairValidator(this.grid.cells, cell1, cell2).checkPair();
-    pairType ? this.soundManager.playSound('success') : this.soundManager.playSound('error');
+    const validator = new PairValidator(this.grid.cells, cell1, cell2);
+    const pairType = validator.checkPair();
+
+    if (!pairType) {
+      this.soundManager.playSound('error');
+      this.selectedCells = [];
+      return this.invalidPair(cell1, cell2);
+    }
+
+    this.validPair(cell1, cell2);
+    this.soundManager.playSound('success');
 
     const scoreValue = this.scoreManager.scoreCounter(pairType);
     this.score.setValue(scoreValue);
@@ -150,9 +162,33 @@ export class GameScreen {
     this.selectedCells = [];
   }
 
+  validPair(cell1, cell2) {
+    cell1.match();
+    cell2.match();
+
+    setTimeout(() => {
+      cell1.hide();
+      cell2.hide();
+    }, 300);
+
+    return true;
+  }
+
+  invalidPair(cell1, cell2) {
+    cell1.deselect();
+    cell2.deselect();
+
+    return false;
+  }
+
   bindEvents() {
     this.gameGrid.addEventListener('click', (event) => {
       this.selectCells(event);
+    });
+    this.assistBtns.hint.addEventListener('click', () => {
+      const cells = this.assistManager.hint();
+      cells[0].showHint();
+      cells[1].showHint();
     });
   }
 

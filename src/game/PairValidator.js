@@ -12,14 +12,12 @@ export class PairValidator {
     const pairType = isFivePlus ? 'fivePlus' : isSumTen ? 'sumTen' : isEqual ? 'equal' : null;
 
     if (!pairType) {
-      return this.invalidPair();
+      return null;
     }
 
     if (!this.canConnect()) {
-      return this.invalidPair();
+      return null;
     }
-
-    this.validPair();
     return pairType;
   }
 
@@ -75,24 +73,5 @@ export class PairValidator {
 
   rightCell() {
     return Math.max(this.cell1.id, this.cell2.id);
-  }
-
-  validPair() {
-    this.cell1.match();
-    this.cell2.match();
-
-    setTimeout(() => {
-      this.cell1.hide();
-      this.cell2.hide();
-    }, 300);
-
-    return true;
-  }
-
-  invalidPair() {
-    this.cell1.deselect();
-    this.cell2.deselect();
-
-    return false;
   }
 }
