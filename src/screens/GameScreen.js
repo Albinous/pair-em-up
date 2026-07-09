@@ -109,13 +109,9 @@ export class GameScreen {
       eraser: this.createAssistBtn('eraser'),
     };
 
-    container.append(
-      this.assistBtns.hint.element,
-      this.assistBtns.revert.element,
-      this.assistBtns.addNumbers.element,
-      this.assistBtns.shuffle.element,
-      this.assistBtns.eraser.element
-    );
+    const elements = Object.values(this.assistBtns).map((btn) => btn.element);
+
+    container.append(...elements);
 
     return container;
   }
@@ -138,7 +134,6 @@ export class GameScreen {
 
     return {
       element: div,
-      btn,
       count,
     };
   }
@@ -148,8 +143,7 @@ export class GameScreen {
   }
 
   updateHintCount() {
-    const countValue = this.assistManager.countOfAvailableMoves();
-    this.assistBtns.hint.count.textContent = countValue;
+    this.assistBtns.hint.count.textContent = this.hintCount();
   }
 
   selectCells(event) {
@@ -219,6 +213,7 @@ export class GameScreen {
     });
     this.assistBtns.hint.element.addEventListener('click', () => {
       const cells = this.assistManager.hint();
+      if (!cells) return;
       cells[0].showHint();
       cells[1].showHint();
       this.updateHintCount();
