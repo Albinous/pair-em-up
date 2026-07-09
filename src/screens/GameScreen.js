@@ -88,9 +88,12 @@ export class GameScreen {
 
   createGridClassic() {
     const classicNumbers = new GridGenerator().generateClassicNumbers();
-    this.grid = new Grid(classicNumbers);
+    this.grid = new Grid();
+    const newCells = this.grid.createCells(classicNumbers);
+    const grid = this.grid.render();
+    this.grid.appendCells(newCells);
 
-    return this.grid.render();
+    return grid;
   }
 
   createAssistBtns() {
@@ -243,6 +246,12 @@ export class GameScreen {
 
       this.lastMove = null;
       this.updateRevert();
+    });
+
+    this.assistBtns.addNumbers.btn.addEventListener('click', () => {
+      const numbers = this.assistManager.addNumbers();
+      const newCells = this.grid.createCells(numbers);
+      this.grid.appendCells(newCells);
     });
   }
 

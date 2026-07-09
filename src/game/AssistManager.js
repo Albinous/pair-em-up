@@ -44,7 +44,16 @@ export class AssistManager {
     cell2.unmatch();
   }
 
-  addNumbers() {}
+  addNumbers() {
+    const remainedCells = [];
+
+    for (let i = 0; i < this.cells.length; i++) {
+      if (!this.cells[i].element.classList.contains('matched')) {
+        remainedCells.push(this.cells[i].value);
+      }
+    }
+    return remainedCells;
+  }
 
   shuffle() {}
 

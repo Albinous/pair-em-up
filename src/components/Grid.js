@@ -2,8 +2,7 @@ import { createElement } from '@/utils/dom';
 import { Cell } from './Cell';
 
 export class Grid {
-  constructor(numbers) {
-    this.numbers = numbers;
+  constructor() {
     this.cells = [];
     this.element = null;
   }
@@ -13,19 +12,28 @@ export class Grid {
       classes: ['game-grid'],
     });
 
-    this.createCells();
-
     return this.element;
   }
 
-  createCells() {
-    this.numbers.forEach((number, index) => {
-      const row = Math.floor(index / 9);
-      const col = index % 9;
-      const cell = new Cell(index, number, row, col);
-      this.cells.push(cell);
+  appendCells(newCells) {
+    newCells.forEach((cell) => {
       this.element.append(cell.render());
     });
+  }
+
+  createCells(numbers) {
+    const newCells = [];
+    const startIndex = this.cells.length;
+    numbers.forEach((number, index) => {
+      const id = startIndex + index;
+      const row = Math.floor(id / 9);
+      const col = id % 9;
+      const cell = new Cell(id, number, row, col);
+      this.cells.push(cell);
+      newCells.push(cell);
+    });
+
+    return newCells;
   }
 
   getCellById(id) {
