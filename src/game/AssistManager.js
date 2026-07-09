@@ -3,6 +3,8 @@ import { PairValidator } from './PairValidator';
 export class AssistManager {
   constructor(cells) {
     this.cells = cells;
+    this.lastMove = null;
+    this.canRevert = false;
   }
 
   hint() {
@@ -34,7 +36,13 @@ export class AssistManager {
     }
   }
 
-  revert() {}
+  revert(lastCells) {
+    const cell1 = lastCells[0];
+    const cell2 = lastCells[1];
+
+    cell1.unmatch();
+    cell2.unmatch();
+  }
 
   addNumbers() {}
 

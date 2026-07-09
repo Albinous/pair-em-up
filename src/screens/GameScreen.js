@@ -181,9 +181,13 @@ export class GameScreen {
     this.validPair(cell1, cell2);
     this.soundManager.playSound('success');
 
-    const scoreValue = this.scoreManager.scoreCounter(pairType);
+    const scoreValue = this.scoreManager.addScore(pairType);
     this.score.setValue(scoreValue);
     this.updateHintCount();
+    this.lastMove = {
+      cells: [cell1, cell2],
+      pairType,
+    };
 
     this.selectedCells = [];
   }
@@ -217,6 +221,17 @@ export class GameScreen {
       cells[0].showHint();
       cells[1].showHint();
       this.updateHintCount();
+    });
+
+    this.assistBtns.revert.element.addEventListener('click', () => {
+      if (!this.lastMove) return;
+      this.assistManager.revert(this.lastMove.cells);
+      this.moves.setValue(--this.movesCount);
+      const scoreValue = this.scoreManager.removeScore(this.lastMove.pairType);
+      this.score.setValue(scoreValue);
+      this.updateHintCount();
+
+      this.lastMove = null;
     });
   }
 

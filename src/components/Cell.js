@@ -38,6 +38,14 @@ export class Cell {
     this.matched = true;
   }
 
+  unmatch() {
+    this.element.classList.remove('matched');
+    this.element.classList.remove('disabled');
+    this.deselect();
+
+    this.matched = false;
+  }
+
   hide() {
     this.element.classList.add('disabled');
   }

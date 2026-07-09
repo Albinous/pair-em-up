@@ -3,7 +3,7 @@ export class ScoreManager {
     this.score = 0;
   }
 
-  scoreCounter(pairType) {
+  addScore(pairType) {
     switch (pairType) {
       case 'fivePlus':
         this.score += 3;
@@ -13,6 +13,22 @@ export class ScoreManager {
         break;
       case 'equal':
         this.score += 1;
+        break;
+    }
+
+    return this.score;
+  }
+
+  removeScore(pairType) {
+    switch (pairType) {
+      case 'fivePlus':
+        this.score -= 3;
+        break;
+      case 'sumTen':
+        this.score -= 2;
+        break;
+      case 'equal':
+        this.score -= 1;
         break;
     }
 
