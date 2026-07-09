@@ -109,6 +109,8 @@ export class GameScreen {
       eraser: this.createAssistBtn('eraser'),
     };
 
+    this.updateRevert();
+
     const elements = Object.values(this.assistBtns).map((btn) => btn.element);
 
     container.append(...elements);
@@ -134,6 +136,7 @@ export class GameScreen {
 
     return {
       element: div,
+      btn,
       count,
     };
   }
@@ -144,6 +147,12 @@ export class GameScreen {
 
   updateHintCount() {
     this.assistBtns.hint.count.textContent = this.hintCount();
+  }
+
+  updateRevert() {
+    const hasLastMove = Boolean(this.lastMove);
+    this.assistBtns.revert.count.textContent = Number(hasLastMove);
+    this.assistBtns.revert.btn.disabled = !hasLastMove;
   }
 
   selectCells(event) {
@@ -188,6 +197,7 @@ export class GameScreen {
       cells: [cell1, cell2],
       pairType,
     };
+    this.updateRevert();
 
     this.selectedCells = [];
   }
@@ -223,7 +233,7 @@ export class GameScreen {
       this.updateHintCount();
     });
 
-    this.assistBtns.revert.element.addEventListener('click', () => {
+    this.assistBtns.revert.btn.addEventListener('click', () => {
       if (!this.lastMove) return;
       this.assistManager.revert(this.lastMove.cells);
       this.moves.setValue(--this.movesCount);
@@ -232,6 +242,7 @@ export class GameScreen {
       this.updateHintCount();
 
       this.lastMove = null;
+      this.updateRevert();
     });
   }
 
