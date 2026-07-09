@@ -94,12 +94,13 @@ export class GameScreen {
   }
 
   createAssistBtns() {
+    this.assistManager = new AssistManager(this.grid.cells);
     const container = createElement('div', {
       classes: ['game-assist__btns'],
     });
 
     this.assistBtns = {
-      hint: this.createAssistBtn('hint'),
+      hint: this.createAssistBtn('hint', this.hintCount()),
       revert: this.createAssistBtn('revert'),
       addNumbers: this.createAssistBtn('add-numbers'),
       shuffle: this.createAssistBtn('shuffle'),
@@ -107,18 +108,27 @@ export class GameScreen {
     };
 
     container.append(...Object.values(this.assistBtns));
-    this.assistManager = new AssistManager(this.grid.cells);
 
     return container;
   }
 
-  createAssistBtn(name) {
+  createAssistBtn(name, moves = '') {
+    const div = createElement('div', {
+      classes: ['game-assist__item'],
+    });
     const btn = new Button({
       classes: ['game-assist__btn'],
       text: name,
     }).render();
 
-    return btn;
+    const count = createElement('span', {
+      classes: ['game-assist__count'],
+      text: moves,
+    });
+
+    div.append(btn, count);
+
+    return div;
   }
 
   selectCells(event) {
@@ -179,6 +189,10 @@ export class GameScreen {
     cell2.deselect();
 
     return false;
+  }
+
+  hintCount() {
+    return this.assistManager.countOfAvailableMoves();
   }
 
   bindEvents() {

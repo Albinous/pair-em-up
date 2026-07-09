@@ -58,12 +58,6 @@
         transform: scale(0.96);
       }
 
-      &.hint {
-        background: #ff9c07;
-        color: #fff;
-        border-color: #ff9c07;
-      }
-
       &.selected {
         background: #4f8cff;
         color: #fff;
@@ -78,15 +72,6 @@
         opacity: 0;
         pointer-events: none;
       }
-    }
-  }
-
-  &-assist {
-    &__btns {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin: 40px 0;
     }
   }
 }
