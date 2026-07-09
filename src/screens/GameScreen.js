@@ -99,15 +99,23 @@ export class GameScreen {
       classes: ['game-assist__btns'],
     });
 
+    const hint = this.createAssistBtn('hint', this.hintCount());
+
     this.assistBtns = {
-      hint: this.createAssistBtn('hint', this.hintCount()),
+      hint,
       revert: this.createAssistBtn('revert'),
       addNumbers: this.createAssistBtn('add-numbers'),
       shuffle: this.createAssistBtn('shuffle'),
       eraser: this.createAssistBtn('eraser'),
     };
 
-    container.append(...Object.values(this.assistBtns));
+    container.append(
+      this.assistBtns.hint.element,
+      this.assistBtns.revert.element,
+      this.assistBtns.addNumbers.element,
+      this.assistBtns.shuffle.element,
+      this.assistBtns.eraser.element
+    );
 
     return container;
   }
@@ -128,7 +136,20 @@ export class GameScreen {
 
     div.append(btn, count);
 
-    return div;
+    return {
+      element: div,
+      btn,
+      count,
+    };
+  }
+
+  hintCount() {
+    return this.assistManager.countOfAvailableMoves();
+  }
+
+  updateHintCount() {
+    const countValue = this.assistManager.countOfAvailableMoves();
+    this.assistBtns.hint.count.textContent = countValue;
   }
 
   selectCells(event) {
@@ -168,6 +189,7 @@ export class GameScreen {
 
     const scoreValue = this.scoreManager.scoreCounter(pairType);
     this.score.setValue(scoreValue);
+    this.updateHintCount();
 
     this.selectedCells = [];
   }
@@ -191,18 +213,15 @@ export class GameScreen {
     return false;
   }
 
-  hintCount() {
-    return this.assistManager.countOfAvailableMoves();
-  }
-
   bindEvents() {
     this.gameGrid.addEventListener('click', (event) => {
       this.selectCells(event);
     });
-    this.assistBtns.hint.addEventListener('click', () => {
+    this.assistBtns.hint.element.addEventListener('click', () => {
       const cells = this.assistManager.hint();
       cells[0].showHint();
       cells[1].showHint();
+      this.updateHintCount();
     });
   }
 
