@@ -55,7 +55,17 @@ export class AssistManager {
     return remainedCells;
   }
 
-  shuffle() {}
+  shuffle() {
+    const values = this.cells.map((cell) => cell.value);
+    for (let i = values.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [values[i], values[j]] = [values[j], values[i]];
+    }
+
+    this.cells.forEach((cell, index) => {
+      cell.setValue(values[index]);
+    });
+  }
 
   eraser() {}
 }

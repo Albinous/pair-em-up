@@ -261,6 +261,10 @@ export class GameScreen {
       this.updateAddNumbers();
       this.updateHintCount();
     });
+
+    this.assistBtns.shuffle.btn.addEventListener('click', () => {
+      this.assistManager.shuffle();
+    });
   }
 
   destroy() {}

@@ -53,4 +53,9 @@ export class Cell {
   showHint() {
     this.element.classList.add('hint');
   }
+
+  setValue(value) {
+    this.value = value;
+    this.element.textContent = value;
+  }
 }
