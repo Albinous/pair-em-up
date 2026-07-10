@@ -106,13 +106,14 @@ export class GameScreen {
     const hint = this.createAssistBtn('hint', this.hintCount());
     this.addNumbersValue = 10;
     this.shuffleValue = 5;
+    this.eraserValue = 5;
 
     this.assistBtns = {
       hint,
       revert: this.createAssistBtn('revert'),
       addNumbers: this.createAssistBtn('add numbers', this.addNumbersValue),
       shuffle: this.createAssistBtn('shuffle', this.shuffleValue),
-      eraser: this.createAssistBtn('eraser'),
+      eraser: this.createAssistBtn('eraser', this.eraserValue),
     };
 
     this.updateRevert();
@@ -171,6 +172,11 @@ export class GameScreen {
     this.assistBtns.shuffle.btn.disabled = this.shuffleValue === 0;
   }
 
+  updateEraser() {
+    this.assistBtns.eraser.count.textContent = --this.eraserValue;
+    this.assistBtns.eraser.btn.disabled = this.eraserValue === 0;
+  }
+
   selectCells(event) {
     const cell = event.target.closest('.game-grid__cell');
     if (!cell) return;
@@ -190,6 +196,8 @@ export class GameScreen {
     if (this.isErasing) {
       this.assistManager.erase(cellObject);
       this.isErasing = false;
+      this.updateEraser();
+      this.updateHintCount();
       return;
     }
     cellObject.select();
