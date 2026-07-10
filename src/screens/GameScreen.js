@@ -19,6 +19,7 @@ export class GameScreen {
     this.timerManager = new TimerManager();
     this.soundManager = new SoundManager();
     this.movesCount = 0;
+    this.isErasing = false;
   }
 
   render() {
@@ -183,8 +184,15 @@ export class GameScreen {
       if (index !== -1) this.selectedCells.splice(index, 1);
       return;
     }
-    cellObject.select();
+
     this.soundManager.playSound('click');
+
+    if (this.isErasing) {
+      this.assistManager.erase(cellObject);
+      this.isErasing = false;
+      return;
+    }
+    cellObject.select();
     this.selectedCells.push(cellObject);
     if (this.selectedCells.length === 2) {
       this.checkPair(this.selectedCells[0], this.selectedCells[1]);
@@ -272,6 +280,10 @@ export class GameScreen {
       this.assistManager.shuffle();
       this.updateShuffle();
       this.updateHintCount();
+    });
+
+    this.assistBtns.eraser.btn.addEventListener('click', () => {
+      this.isErasing = true;
     });
   }
 

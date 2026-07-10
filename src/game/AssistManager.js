@@ -67,5 +67,8 @@ export class AssistManager {
     });
   }
 
-  erase() {}
+  erase(cell) {
+    cell.match();
+    cell.hide();
+  }
 }
