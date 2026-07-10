@@ -67,5 +67,5 @@ export class AssistManager {
     });
   }
 
-  eraser() {}
+  erase() {}
 }

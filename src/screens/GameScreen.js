@@ -104,12 +104,13 @@ export class GameScreen {
 
     const hint = this.createAssistBtn('hint', this.hintCount());
     this.addNumbersValue = 10;
+    this.shuffleValue = 5;
 
     this.assistBtns = {
       hint,
       revert: this.createAssistBtn('revert'),
       addNumbers: this.createAssistBtn('add numbers', this.addNumbersValue),
-      shuffle: this.createAssistBtn('shuffle'),
+      shuffle: this.createAssistBtn('shuffle', this.shuffleValue),
       eraser: this.createAssistBtn('eraser'),
     };
 
@@ -162,6 +163,11 @@ export class GameScreen {
   updateAddNumbers() {
     this.assistBtns.addNumbers.count.textContent = --this.addNumbersValue;
     this.assistBtns.addNumbers.btn.disabled = this.addNumbersValue === 0;
+  }
+
+  updateShuffle() {
+    this.assistBtns.shuffle.count.textContent = --this.shuffleValue;
+    this.assistBtns.shuffle.btn.disabled = this.shuffleValue === 0;
   }
 
   selectCells(event) {
@@ -264,6 +270,8 @@ export class GameScreen {
 
     this.assistBtns.shuffle.btn.addEventListener('click', () => {
       this.assistManager.shuffle();
+      this.updateShuffle();
+      this.updateHintCount();
     });
   }
 
