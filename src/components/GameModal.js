@@ -35,4 +35,12 @@ export class GameModal {
   showScore() {}
 
   showTime() {}
+
+  show() {
+    this.element.classList.add('show');
+  }
+
+  hide() {
+    this.element.classList.remove('show');
+  }
 }

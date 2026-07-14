@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as *;
+@use '../components/modal';
 
 .game {
   &-screen {

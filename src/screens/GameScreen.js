@@ -239,10 +239,11 @@ export class GameScreen {
   }
 
   checkResult() {
-    const isWin = +this.score.value >= 100 ? true : false;
+    const isWin = +this.score.value >= 100;
 
     if (isWin) {
       this.modal.showTitle('win');
+      this.modal.show();
     }
 
     const assistEnd =
@@ -255,6 +256,7 @@ export class GameScreen {
 
     if (assistEnd && lineEnd) {
       this.modal.showTitle('lose');
+      this.modal.show();
     }
   }
 
