@@ -1,4 +1,5 @@
 import { Button } from '@/components/Button';
+import { GameModal } from '@/components/GameModal';
 import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
@@ -18,6 +19,7 @@ export class GameScreen {
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
     this.soundManager = new SoundManager();
+    this.modal = new GameModal();
     this.movesCount = 0;
     this.isErasing = false;
   }
@@ -43,7 +45,9 @@ export class GameScreen {
 
     const assistBtns = this.createAssistBtns();
 
-    container.append(header, subHeader, this.gameGrid, assistBtns);
+    const modal = this.modal.render();
+
+    container.append(header, subHeader, this.gameGrid, assistBtns, modal);
 
     this.bindEvents();
     return container;
@@ -104,13 +108,14 @@ export class GameScreen {
     });
 
     const hint = this.createAssistBtn('hint', this.hintCount());
-    this.addNumbersValue = 10;
+    this.revertValue = 1;
+    this.addNumbersValue = 2;
     this.shuffleValue = 5;
     this.eraserValue = 5;
 
     this.assistBtns = {
       hint,
-      revert: this.createAssistBtn('revert'),
+      revert: this.createAssistBtn('revert', this.revertValue),
       addNumbers: this.createAssistBtn('add numbers', this.addNumbersValue),
       shuffle: this.createAssistBtn('shuffle', this.shuffleValue),
       eraser: this.createAssistBtn('eraser', this.eraserValue),
@@ -229,8 +234,28 @@ export class GameScreen {
       pairType,
     };
     this.updateRevert();
-
+    this.checkResult();
     this.selectedCells = [];
+  }
+
+  checkResult() {
+    const isWin = +this.score.value >= 100 ? true : false;
+
+    if (isWin) {
+      this.modal.showTitle('win');
+    }
+
+    const assistEnd =
+      this.hintCount() === 0 &&
+      this.addNumbersValue === 0 &&
+      this.shuffleValue === 0 &&
+      this.eraserValue === 0;
+
+    const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
+
+    if (assistEnd && lineEnd) {
+      this.modal.showTitle('lose');
+    }
   }
 
   validPair(cell1, cell2) {
