@@ -28,6 +28,7 @@ export class App {
       actions: {
         start: () => this.showScreen(this.createStartScreen()),
         playAgain: () => this.showScreen(this.createGameScreen(title)),
+        results: () => this.showScreen(this.createResultsScreen()),
       },
     });
   }

@@ -20,7 +20,11 @@ export class GameScreen {
     this.timerManager = new TimerManager();
     this.soundManager = new SoundManager();
     this.modal = new GameModal({
-      playAgain: this.actions.playAgain,
+      actions: {
+        playAgain: this.actions.playAgain,
+        start: this.actions.start,
+        results: this.actions.results,
+      },
     });
     this.movesCount = 0;
     this.isErasing = false;
