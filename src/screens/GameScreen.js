@@ -241,9 +241,17 @@ export class GameScreen {
   checkResult() {
     const isWin = +this.score.value >= 100;
 
+    const stats = [
+      { title: 'Score', value: this.score.value },
+      { title: 'Time', value: this.timer.value },
+      { title: 'Moves', value: this.moves.value },
+    ];
+
     if (isWin) {
-      this.modal.showTitle('win');
+      this.modal.setData('Win', stats);
+
       this.modal.show();
+      this.timerManager.stop();
     }
 
     const assistEnd =
@@ -252,11 +260,12 @@ export class GameScreen {
       this.shuffleValue === 0 &&
       this.eraserValue === 0;
 
-    const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
+    const lineEnd = Math.floor(this.grid.cells.length / 9) > 10;
 
     if (assistEnd && lineEnd) {
-      this.modal.showTitle('lose');
+      this.modal.setData('Lose', stats);
       this.modal.show();
+      this.timerManager.stop();
     }
   }
 

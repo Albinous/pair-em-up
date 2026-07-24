@@ -1,6 +1,6 @@
 export class ScoreManager {
   constructor() {
-    this.score = 0;
+    this.score = 98;
   }
 
   addScore(pairType) {
