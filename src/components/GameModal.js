@@ -97,13 +97,16 @@ export class GameModal {
 
   bindEvents() {
     this.buttons.reset.addEventListener('click', () => {
+      this.hide();
       this.actions.playAgain();
     });
 
     this.buttons.menu.addEventListener('click', () => {
+      this.hide();
       this.actions.start();
     });
     this.buttons.results.addEventListener('click', () => {
+      this.hide();
       this.actions.results();
     });
   }
