@@ -264,7 +264,7 @@ export class GameScreen {
 
     const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
-    if (assistEnd && lineEnd) {
+    if (assistEnd || lineEnd) {
       this.modal.setData('Lose', stats);
       this.modal.show();
       this.timerManager.stop();
