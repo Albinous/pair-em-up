@@ -260,7 +260,7 @@ export class GameScreen {
       this.shuffleValue === 0 &&
       this.eraserValue === 0;
 
-    const lineEnd = Math.floor(this.grid.cells.length / 9) > 10;
+    const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
     if (assistEnd && lineEnd) {
       this.modal.setData('Lose', stats);
