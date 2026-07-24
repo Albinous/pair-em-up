@@ -12,14 +12,16 @@ import { TimerManager } from '@/game/Timer';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
-  constructor(title, { start }) {
+  constructor(title, { actions }) {
     this.title = title;
-    this.start = start;
+    this.actions = actions;
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
     this.soundManager = new SoundManager();
-    this.modal = new GameModal();
+    this.modal = new GameModal({
+      playAgain: this.actions.playAgain,
+    });
     this.movesCount = 0;
     this.isErasing = false;
   }
@@ -29,7 +31,7 @@ export class GameScreen {
       classes: ['game-screen'],
     });
 
-    const header = new Header({ title: this.title, start: this.start }).render();
+    const header = new Header({ title: this.title, start: this.actions.start }).render();
 
     const subHeader = createElement('div', {
       classes: ['game-values'],

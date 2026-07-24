@@ -2,10 +2,11 @@ import { createElement } from '@/utils/dom';
 import { Button } from './Button';
 
 export class GameModal {
-  constructor() {
+  constructor({ playAgain }) {
     this.element = null;
     this.title = '';
     this.stats = [];
+    this.playAgain = playAgain;
   }
 
   render() {
@@ -31,6 +32,7 @@ export class GameModal {
     this.renderButtons();
 
     this.element.classList.add('show');
+    this.bindEvents();
   }
 
   renderTitle() {
@@ -91,5 +93,12 @@ export class GameModal {
   setData(title, stats) {
     this.title = title;
     this.stats = stats;
+  }
+
+  bindEvents() {
+    this.buttons.reset.addEventListener('click', () => {
+      this.hide();
+      this.playAgain();
+    });
   }
 }

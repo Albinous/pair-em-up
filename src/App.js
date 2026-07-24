@@ -25,7 +25,10 @@ export class App {
 
   createGameScreen(title) {
     return new GameScreen(title, {
-      start: () => this.showScreen(this.createStartScreen()),
+      actions: {
+        start: () => this.showScreen(this.createStartScreen()),
+        playAgain: () => this.showScreen(this.createGameScreen(title)),
+      },
     });
   }
 
