@@ -1,4 +1,5 @@
 import { createElement } from '@/utils/dom';
+import { Button } from './Button';
 
 export class GameModal {
   constructor() {
@@ -18,18 +19,21 @@ export class GameModal {
     this.content = createElement('div', {
       classes: ['modal-content'],
     });
-    // this.stats = createElement('div', {
-    //   classes: ['modal-stats'],
-    // });
     this.element.append(overlay, this.content);
 
     return this.element;
   }
 
-  showTime() {}
-
   show() {
     this.content.innerHTML = '';
+    this.renderTitle();
+    this.renderStats();
+    this.renderButtons();
+
+    this.element.classList.add('show');
+  }
+
+  renderTitle() {
     const titleValue = `You ${this.title}`;
     const title = createElement('h1', {
       classes: ['modal-title'],
@@ -37,6 +41,9 @@ export class GameModal {
     });
 
     this.content.append(title);
+  }
+
+  renderStats() {
     const containerStats = createElement('div', {
       classes: ['modal-stats'],
     });
@@ -54,10 +61,27 @@ export class GameModal {
       container.append(statTitle, valueSpan);
       containerStats.append(container);
     });
-    // this.stats.append(containerStats);
     this.content.append(containerStats);
+  }
 
-    this.element.classList.add('show');
+  createBtn(text) {
+    return new Button({
+      classes: ['modal-btn'],
+      text,
+    }).render();
+  }
+
+  renderButtons() {
+    const container = createElement('div', {
+      classes: ['modal-btns'],
+    });
+    this.buttons = {
+      reset: this.createBtn('Play Again'),
+      menu: this.createBtn('Main menu'),
+      results: this.createBtn('Results'),
+    };
+    container.append(...Object.values(this.buttons));
+    this.content.append(container);
   }
 
   hide() {
