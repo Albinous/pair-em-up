@@ -5,6 +5,7 @@ import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
 import { AssistManager } from '@/game/AssistManager';
 import { GridGenerator } from '@/game/GridGenerator';
+import { HistoryManager } from '@/game/HistoryManager';
 import { PairValidator } from '@/game/PairValidator';
 import { ScoreManager } from '@/game/ScoreManager';
 import { SoundManager } from '@/game/SoundManager';
@@ -24,6 +25,7 @@ export class GameScreen {
     });
     this.movesCount = 0;
     this.isErasing = false;
+    this.history = new HistoryManager();
   }
 
   render() {
@@ -250,6 +252,15 @@ export class GameScreen {
     ];
 
     if (isWin) {
+      const result = {
+        mode: this.title,
+        score: this.score.value,
+        time: this.timer.value,
+        moves: this.moves.value,
+        date: Date.now(),
+      };
+      this.history.saveResult(result);
+
       this.modal.setData('Win', stats);
 
       this.modal.show();
