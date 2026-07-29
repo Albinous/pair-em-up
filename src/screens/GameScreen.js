@@ -291,12 +291,21 @@ export class GameScreen {
       value: cell.value,
       matched: cell.matched,
     }));
+
+    const lastMove = this.lastMove
+      ? {
+          cells: this.lastMove.cells.map((cell) => cell.id),
+          pairType: this.lastMove.pairType,
+        }
+      : null;
+
     const state = {
       mode: this.title,
       score: this.score.value,
       time: this.timer.value,
       moves: this.moves.value,
       cells,
+      lastMove,
     };
     this.gameState.save(state);
   }
