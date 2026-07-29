@@ -299,6 +299,14 @@ export class GameScreen {
         }
       : null;
 
+    const assists = {
+      hint: this.hintCount(),
+      revert: this.revertValue,
+      addNumbers: this.addNumbersValue,
+      shuffle: this.shuffleValue,
+      eraser: this.eraserValue,
+    };
+
     const state = {
       mode: this.title,
       score: this.score.value,
@@ -306,6 +314,7 @@ export class GameScreen {
       moves: this.moves.value,
       cells,
       lastMove,
+      assists,
     };
     this.gameState.save(state);
   }
