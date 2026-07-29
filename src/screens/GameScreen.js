@@ -49,10 +49,12 @@ export class GameScreen {
     const state = this.gameState.get();
 
     if (state) {
+      this.gameGrid = this.createGrid(state.cells, true);
       this.loadGameState(state);
+    } else {
+      const classicNumbers = new GridGenerator().generateClassicNumbers();
+      this.gameGrid = this.createGrid(classicNumbers);
     }
-
-    this.gameGrid = this.createGridClassic();
     this.timerManager.start(this.timer);
 
     const assistBtns = this.createAssistBtns();
@@ -103,10 +105,9 @@ export class GameScreen {
     return this.moves.render();
   }
 
-  createGridClassic() {
-    const classicNumbers = new GridGenerator().generateClassicNumbers();
+  createGrid(data, isSaved = false) {
     this.grid = new Grid();
-    const newCells = this.grid.createCells(classicNumbers);
+    const newCells = isSaved ? this.grid.restoreCells(data) : this.grid.createCells(data);
     const grid = this.grid.render();
     this.grid.appendCells(newCells);
 

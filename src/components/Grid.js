@@ -18,6 +18,11 @@ export class Grid {
   appendCells(newCells) {
     newCells.forEach((cell) => {
       this.element.append(cell.render());
+
+      if (cell.matched) {
+        cell.match();
+        cell.hide();
+      }
     });
   }
 
@@ -29,6 +34,21 @@ export class Grid {
       const row = Math.floor(id / 9);
       const col = id % 9;
       const cell = new Cell(id, number, row, col);
+      this.cells.push(cell);
+      newCells.push(cell);
+    });
+
+    return newCells;
+  }
+
+  restoreCells(savedCells) {
+    this.cells = [];
+    const newCells = [];
+    savedCells.forEach((savedCell) => {
+      const row = Math.floor(savedCell.id / 9);
+      const col = savedCell.id % 9;
+      const cell = new Cell(savedCell.id, savedCell.value, row, col);
+      cell.matched = savedCell.matched;
       this.cells.push(cell);
       newCells.push(cell);
     });
