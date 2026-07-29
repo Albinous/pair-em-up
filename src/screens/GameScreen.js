@@ -4,6 +4,7 @@ import { GameStat } from '@/components/GameStat';
 import { Grid } from '@/components/Grid';
 import { Header } from '@/components/Header';
 import { AssistManager } from '@/game/AssistManager';
+import { GameState } from '@/game/GameState';
 import { GridGenerator } from '@/game/GridGenerator';
 import { HistoryManager } from '@/game/HistoryManager';
 import { PairValidator } from '@/game/PairValidator';
@@ -26,6 +27,7 @@ export class GameScreen {
     this.movesCount = 0;
     this.isErasing = false;
     this.history = new HistoryManager();
+    this.gameState = new GameState();
   }
 
   render() {
@@ -238,6 +240,7 @@ export class GameScreen {
       pairType,
     };
     this.updateRevert();
+    this.saveGameState();
     this.checkResult();
     this.selectedCells = [];
   }
@@ -280,6 +283,32 @@ export class GameScreen {
       this.modal.show();
       this.timerManager.stop();
     }
+  }
+
+  saveGameState() {
+    const cells = this.grid.cells.map((cell) => ({
+      id: cell.id,
+      value: cell.value,
+      matched: cell.matched,
+    }));
+    const state = {
+      mode: this.title,
+      score: this.score.value,
+      time: this.timer.value,
+      moves: this.moves.value,
+      cells,
+    };
+    this.gameState.save(state);
+  }
+
+  loadGameState() {
+    const state = this.gameState.get();
+
+    if (!state) {
+      return;
+    }
+
+    this.score.setValue(state.score);
   }
 
   validPair(cell1, cell2) {
