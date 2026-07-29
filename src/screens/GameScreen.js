@@ -43,11 +43,17 @@ export class GameScreen {
     const timer = this.createTimer();
     const score = this.createScore();
     const moves = this.createMoves();
-    this.timerManager.start(this.timer);
 
     subHeader.append(timer, score, moves);
 
+    const state = this.gameState.get();
+
+    if (state) {
+      this.loadGameState(state);
+    }
+
     this.gameGrid = this.createGridClassic();
+    this.timerManager.start(this.timer);
 
     const assistBtns = this.createAssistBtns();
 
@@ -319,14 +325,14 @@ export class GameScreen {
     this.gameState.save(state);
   }
 
-  loadGameState() {
-    const state = this.gameState.get();
-
+  loadGameState(state) {
     if (!state) {
       return;
     }
-
+    this.timer.setValue(state.time);
+    this.timerManager.setElapsedTime(state.time);
     this.score.setValue(state.score);
+    this.moves.setValue(state.moves);
   }
 
   validPair(cell1, cell2) {

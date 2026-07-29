@@ -6,6 +6,12 @@ export class TimerManager {
     this.elapsedTime = 0;
     this.time = null;
   }
+
+  setElapsedTime(time) {
+    const [minutes, seconds] = time.split(':').map(Number);
+    this.elapsedTime = (minutes * 60 + seconds) * 1000;
+  }
+
   start(timer) {
     this.startTime = Date.now() - this.elapsedTime;
     this.time = setInterval(() => this.update(timer), 1000);
