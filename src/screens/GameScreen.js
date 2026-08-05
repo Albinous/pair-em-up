@@ -481,6 +481,10 @@ export class GameScreen {
     this.controlBtns.save.addEventListener('click', () => {
       this.saveGameState();
     });
+
+    this.controlBtns.reset.addEventListener('click', () => {
+      this.actions.playAgain();
+    });
   }
 
   destroy() {}
