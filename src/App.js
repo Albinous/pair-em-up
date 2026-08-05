@@ -24,10 +24,14 @@ export class App {
   }
 
   createGameScreen(title) {
+    console.log('create new game');
     return new GameScreen(title, {
       actions: {
         start: () => this.showScreen(this.createStartScreen()),
-        playAgain: () => this.showScreen(this.createGameScreen(title)),
+        playAgain: () => {
+          localStorage.removeItem('game-state');
+          this.showScreen(this.createGameScreen(title));
+        },
         results: () => this.showScreen(this.createResultsScreen()),
       },
     });

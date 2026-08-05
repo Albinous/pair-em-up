@@ -56,14 +56,14 @@ export class GameScreen {
     }
     const assistBtns = this.createAssistBtns();
 
-    if (state) {
-      this.loadGameState(state);
-    }
-
     this.timerManager.start(this.timer);
     const modal = this.modal.render();
 
     container.append(header, subHeader, this.gameGrid, assistBtns, modal);
+
+    if (state) {
+      this.loadGameState(state);
+    }
 
     this.bindEvents();
     return container;
@@ -282,6 +282,14 @@ export class GameScreen {
 
       this.modal.show();
       this.timerManager.stop();
+
+      this.outcome = {
+        isFinished: true,
+        title: 'Win',
+        stats,
+      };
+
+      this.saveGameState();
     }
 
     const assistEnd =
@@ -296,6 +304,13 @@ export class GameScreen {
       this.modal.setData('Lose', stats);
       this.modal.show();
       this.timerManager.stop();
+      this.outcome = {
+        isFinished: true,
+        title: 'Lose',
+        stats,
+      };
+
+      this.saveGameState();
     }
   }
 
@@ -329,6 +344,7 @@ export class GameScreen {
       cells,
       lastMove,
       assists,
+      outcome: this.outcome,
     };
     this.gameState.save(state);
   }
@@ -354,6 +370,19 @@ export class GameScreen {
         }
       : null;
     this.updateRevert(state.assists.revert, lastMove);
+
+    this.loadOutcome(state.outcome);
+  }
+
+  loadOutcome(outcome) {
+    if (!outcome?.isFinished) {
+      return;
+    }
+
+    this.outcome = outcome;
+    this.modal.setData(outcome.title, outcome.stats);
+    this.modal.show();
+    this.timerManager.stop();
   }
 
   validPair(cell1, cell2) {
