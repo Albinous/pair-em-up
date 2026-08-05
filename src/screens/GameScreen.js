@@ -57,9 +57,10 @@ export class GameScreen {
     const assistBtns = this.createAssistBtns();
 
     this.timerManager.start(this.timer);
+    const controlBtns = this.createControlBtns();
     const modal = this.modal.render();
 
-    container.append(header, subHeader, this.gameGrid, assistBtns, modal);
+    container.append(header, subHeader, this.gameGrid, assistBtns, controlBtns, modal);
 
     if (state) {
       this.loadGameState(state);
@@ -314,6 +315,31 @@ export class GameScreen {
     }
   }
 
+  createControlBtns() {
+    const container = createElement('div', {
+      classes: ['game-control__btns'],
+    });
+
+    const buttons = {
+      save: this.createControlBtn('Save'),
+      continue: this.createControlBtn('Continue'),
+      reset: this.createControlBtn('Reset'),
+    };
+
+    container.append(...Object.values(buttons));
+
+    return container;
+  }
+
+  createControlBtn(text) {
+    const btn = new Button({
+      classes: ['game-control__btn', 'btn'],
+      text,
+    }).render();
+
+    return btn;
+  }
+
   saveGameState() {
     const cells = this.grid.cells.map((cell) => ({
       id: cell.id,
@@ -436,6 +462,7 @@ export class GameScreen {
       this.grid.appendCells(newCells);
       this.updateAddNumbers(--this.addNumbersValue);
       this.updateHintCount();
+      this.checkResult();
       this.saveGameState();
     });
 

@@ -154,4 +154,26 @@
       font-weight: 700;
     }
   }
+
+  &-control {
+    &__btns {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      gap: 40px;
+    }
+
+    &__btn {
+      min-width: 90px;
+      padding: 0 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 12px;
+      background: #ffd54f;
+      color: #222;
+      font-weight: 700;
+    }
+  }
 }
