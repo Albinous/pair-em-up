@@ -24,7 +24,6 @@ export class App {
   }
 
   createGameScreen(title) {
-    console.log('create new game');
     return new GameScreen(title, {
       actions: {
         start: () => this.showScreen(this.createStartScreen()),

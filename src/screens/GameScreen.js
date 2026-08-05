@@ -55,8 +55,6 @@ export class GameScreen {
       this.gameGrid = this.createGrid(classicNumbers);
     }
     const assistBtns = this.createAssistBtns();
-
-    this.timerManager.start(this.timer);
     const controlBtns = this.createControlBtns();
     const modal = this.modal.render();
 
@@ -65,6 +63,8 @@ export class GameScreen {
     if (state) {
       this.loadGameState(state);
     }
+
+    this.timerManager.start(this.timer);
 
     this.bindEvents();
     return container;
@@ -320,13 +320,13 @@ export class GameScreen {
       classes: ['game-control__btns'],
     });
 
-    const buttons = {
+    this.controlBtns = {
       save: this.createControlBtn('Save'),
       continue: this.createControlBtn('Continue'),
       reset: this.createControlBtn('Reset'),
     };
 
-    container.append(...Object.values(buttons));
+    container.append(...Object.values(this.controlBtns));
 
     return container;
   }
@@ -395,7 +395,7 @@ export class GameScreen {
           cells: state.lastMove.cells.map((id) => this.grid.getCellById(id)),
         }
       : null;
-    this.updateRevert(state.assists.revert, lastMove);
+    this.updateRevert(lastMove);
 
     this.loadOutcome(state.outcome);
   }
@@ -445,15 +445,16 @@ export class GameScreen {
 
     this.assistBtns.revert.btn.addEventListener('click', () => {
       if (!this.lastMove) return;
+      console.log(this.lastMove);
+      console.log(this.lastMove.cells);
       this.assistManager.revert(this.lastMove.cells);
       this.moves.setValue(--this.movesCount);
       const scoreValue = this.scoreManager.removeScore(this.lastMove.pairType);
       this.score.setValue(scoreValue);
       this.updateHintCount();
-
+      this.saveGameState();
       this.lastMove = null;
       this.updateRevert();
-      this.saveGameState();
     });
 
     this.assistBtns.addNumbers.btn.addEventListener('click', () => {
@@ -475,6 +476,10 @@ export class GameScreen {
 
     this.assistBtns.eraser.btn.addEventListener('click', () => {
       this.isErasing = true;
+    });
+
+    this.controlBtns.save.addEventListener('click', () => {
+      this.saveGameState();
     });
   }
 
