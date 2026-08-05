@@ -50,15 +50,17 @@ export class GameScreen {
 
     if (state) {
       this.gameGrid = this.createGrid(state.cells, true);
-      this.loadGameState(state);
     } else {
       const classicNumbers = new GridGenerator().generateClassicNumbers();
       this.gameGrid = this.createGrid(classicNumbers);
     }
-    this.timerManager.start(this.timer);
-
     const assistBtns = this.createAssistBtns();
 
+    if (state) {
+      this.loadGameState(state);
+    }
+
+    this.timerManager.start(this.timer);
     const modal = this.modal.render();
 
     container.append(header, subHeader, this.gameGrid, assistBtns, modal);
@@ -121,8 +123,8 @@ export class GameScreen {
     });
 
     const hint = this.createAssistBtn('hint', this.hintCount());
-    this.revertValue = 1;
-    this.addNumbersValue = 2;
+    this.revertValue = 0;
+    this.addNumbersValue = 10;
     this.shuffleValue = 5;
     this.eraserValue = 5;
 
@@ -170,29 +172,33 @@ export class GameScreen {
     return this.assistManager.countOfAvailableMoves();
   }
 
-  updateHintCount() {
-    this.assistBtns.hint.count.textContent = this.hintCount();
+  updateHintCount(value = this.hintCount()) {
+    this.assistBtns.hint.count.textContent = value;
   }
 
-  updateRevert() {
-    const hasLastMove = Boolean(this.lastMove);
-    this.assistBtns.revert.count.textContent = Number(hasLastMove);
-    this.assistBtns.revert.btn.disabled = !hasLastMove;
+  updateRevert(lastMove = this.lastMove) {
+    this.revertValue = Number(Boolean(lastMove));
+    this.lastMove = lastMove;
+    this.assistBtns.revert.count.textContent = this.revertValue;
+    this.assistBtns.revert.btn.disabled = this.revertValue === 0;
   }
 
-  updateAddNumbers() {
-    this.assistBtns.addNumbers.count.textContent = --this.addNumbersValue;
-    this.assistBtns.addNumbers.btn.disabled = this.addNumbersValue === 0;
+  updateAddNumbers(value = this.addNumbersValue) {
+    this.addNumbersValue = value;
+    this.assistBtns.addNumbers.count.textContent = value;
+    this.assistBtns.addNumbers.btn.disabled = value === 0;
   }
 
-  updateShuffle() {
-    this.assistBtns.shuffle.count.textContent = --this.shuffleValue;
-    this.assistBtns.shuffle.btn.disabled = this.shuffleValue === 0;
+  updateShuffle(value = this.shuffleValue) {
+    this.shuffleValue = value;
+    this.assistBtns.shuffle.count.textContent = value;
+    this.assistBtns.shuffle.btn.disabled = value === 0;
   }
 
-  updateEraser() {
-    this.assistBtns.eraser.count.textContent = --this.eraserValue;
-    this.assistBtns.eraser.btn.disabled = this.eraserValue === 0;
+  updateEraser(value = this.eraserValue) {
+    this.eraserValue = value;
+    this.assistBtns.eraser.count.textContent = value;
+    this.assistBtns.eraser.btn.disabled = value === 0;
   }
 
   selectCells(event) {
@@ -214,7 +220,8 @@ export class GameScreen {
     if (this.isErasing) {
       this.assistManager.erase(cellObject);
       this.isErasing = false;
-      this.updateEraser();
+      this.updateEraser(--this.eraserValue);
+      this.saveGameState();
       this.updateHintCount();
       return;
     }
@@ -333,7 +340,20 @@ export class GameScreen {
     this.timer.setValue(state.time);
     this.timerManager.setElapsedTime(state.time);
     this.score.setValue(state.score);
+    this.scoreManager.setScore(state.score);
     this.moves.setValue(state.moves);
+    this.movesCount = state.moves;
+    this.updateShuffle(state.assists.shuffle);
+    this.updateAddNumbers(state.assists.addNumbers);
+    this.updateEraser(state.assists.eraser);
+
+    const lastMove = state.lastMove
+      ? {
+          pairType: state.lastMove.pairType,
+          cells: state.lastMove.cells.map((id) => this.grid.getCellById(id)),
+        }
+      : null;
+    this.updateRevert(state.assists.revert, lastMove);
   }
 
   validPair(cell1, cell2) {
@@ -365,6 +385,7 @@ export class GameScreen {
       cells[0].showHint();
       cells[1].showHint();
       this.updateHintCount();
+      this.saveGameState();
     });
 
     this.assistBtns.revert.btn.addEventListener('click', () => {
@@ -377,20 +398,23 @@ export class GameScreen {
 
       this.lastMove = null;
       this.updateRevert();
+      this.saveGameState();
     });
 
     this.assistBtns.addNumbers.btn.addEventListener('click', () => {
       const numbers = this.assistManager.addNumbers();
       const newCells = this.grid.createCells(numbers);
       this.grid.appendCells(newCells);
-      this.updateAddNumbers();
+      this.updateAddNumbers(--this.addNumbersValue);
       this.updateHintCount();
+      this.saveGameState();
     });
 
     this.assistBtns.shuffle.btn.addEventListener('click', () => {
       this.assistManager.shuffle();
-      this.updateShuffle();
+      this.updateShuffle(--this.shuffleValue);
       this.updateHintCount();
+      this.saveGameState();
     });
 
     this.assistBtns.eraser.btn.addEventListener('click', () => {

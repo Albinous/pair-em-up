@@ -34,4 +34,8 @@ export class ScoreManager {
 
     return this.score;
   }
+
+  setScore(value) {
+    this.score = Number(value);
+  }
 }
