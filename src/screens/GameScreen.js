@@ -326,6 +326,8 @@ export class GameScreen {
       reset: this.createControlBtn('Reset'),
     };
 
+    this.controlBtns.continue.disabled = true;
+
     container.append(...Object.values(this.controlBtns));
 
     return container;
@@ -491,6 +493,7 @@ export class GameScreen {
 
     this.controlBtns.save.addEventListener('click', () => {
       this.saveGameState();
+      this.controlBtns.continue.disabled = false;
     });
 
     this.controlBtns.reset.addEventListener('click', () => {
