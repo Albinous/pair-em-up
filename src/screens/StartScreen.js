@@ -1,10 +1,12 @@
 import { Button } from '@/components/Button';
 import { createElement } from '@/utils/dom';
 import githubIcon from '@/assets/icons/github.svg';
+import { GameState } from '@/game/GameState';
 
 export class StartScreen {
   constructor({ actions }) {
     this.actions = actions;
+    this.storage = new GameState();
   }
 
   render() {
@@ -46,7 +48,16 @@ export class StartScreen {
       classic: this.createBtn('mode-classic', 'Classic'),
       random: this.createBtn('mode-random', 'Random'),
       chaotic: this.createBtn('mode-chaotic', 'Chaotic'),
+      continue: this.createBtn('mode-continue', 'Continue'),
     };
+
+    const state = this.storage.getAuto();
+
+    if (state) {
+      buttons.continue.disabled = false;
+    } else {
+      buttons.continue.disabled = true;
+    }
 
     container.append(...Object.values(buttons));
 
@@ -112,6 +123,13 @@ export class StartScreen {
     });
     this.buttons.results.addEventListener('click', () => {
       this.actions.results();
+    });
+    this.buttons.continue.addEventListener('click', () => {
+      const state = this.storage.getAuto();
+      if (!state) return;
+      console.log(state);
+
+      this.actions[state.mode.toLowerCase()]();
     });
   }
 

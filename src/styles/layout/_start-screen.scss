@@ -79,6 +79,14 @@
       $color-chaotic
     );
   }
+  &-continue__btn {
+    background-color: #ffd54f;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
 }
 
 .secondary__btn {
