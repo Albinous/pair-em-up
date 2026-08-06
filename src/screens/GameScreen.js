@@ -17,6 +17,7 @@ export class GameScreen {
   constructor(title, { actions }) {
     this.title = title;
     this.actions = actions;
+    this.grid = new Grid();
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
@@ -46,7 +47,7 @@ export class GameScreen {
 
     subHeader.append(timer, score, moves);
 
-    const state = this.gameState.get();
+    const state = this.gameState.getAuto();
 
     if (state) {
       this.gameGrid = this.createGrid(state.cells, true);
@@ -109,7 +110,6 @@ export class GameScreen {
   }
 
   createGrid(data, isSaved = false) {
-    this.grid = new Grid();
     const newCells = isSaved ? this.grid.restoreCells(data) : this.grid.createCells(data);
     const grid = this.grid.render();
     this.grid.appendCells(newCells);
@@ -222,7 +222,7 @@ export class GameScreen {
       this.assistManager.erase(cellObject);
       this.isErasing = false;
       this.updateEraser(--this.eraserValue);
-      this.saveGameState();
+      this.autosaveGameState();
       this.updateHintCount();
       return;
     }
@@ -255,7 +255,7 @@ export class GameScreen {
       pairType,
     };
     this.updateRevert();
-    this.saveGameState();
+    this.autosaveGameState();
     this.checkResult();
     this.selectedCells = [];
   }
@@ -290,7 +290,7 @@ export class GameScreen {
         stats,
       };
 
-      this.saveGameState();
+      this.autosaveGameState();
     }
 
     const assistEnd =
@@ -311,7 +311,7 @@ export class GameScreen {
         stats,
       };
 
-      this.saveGameState();
+      this.autosaveGameState();
     }
   }
 
@@ -340,7 +340,7 @@ export class GameScreen {
     return btn;
   }
 
-  saveGameState() {
+  createState() {
     const cells = this.grid.cells.map((cell) => ({
       id: cell.id,
       value: cell.value,
@@ -372,6 +372,17 @@ export class GameScreen {
       assists,
       outcome: this.outcome,
     };
+
+    return state;
+  }
+
+  autosaveGameState() {
+    const state = this.createState();
+    this.gameState.autosave(state);
+  }
+
+  saveGameState() {
+    const state = this.createState();
     this.gameState.save(state);
   }
 
@@ -440,7 +451,7 @@ export class GameScreen {
       cells[0].showHint();
       cells[1].showHint();
       this.updateHintCount();
-      this.saveGameState();
+      this.autosaveGameState();
     });
 
     this.assistBtns.revert.btn.addEventListener('click', () => {
@@ -452,7 +463,7 @@ export class GameScreen {
       const scoreValue = this.scoreManager.removeScore(this.lastMove.pairType);
       this.score.setValue(scoreValue);
       this.updateHintCount();
-      this.saveGameState();
+      this.autosaveGameState();
       this.lastMove = null;
       this.updateRevert();
     });
@@ -464,14 +475,14 @@ export class GameScreen {
       this.updateAddNumbers(--this.addNumbersValue);
       this.updateHintCount();
       this.checkResult();
-      this.saveGameState();
+      this.autosaveGameState();
     });
 
     this.assistBtns.shuffle.btn.addEventListener('click', () => {
       this.assistManager.shuffle();
       this.updateShuffle(--this.shuffleValue);
       this.updateHintCount();
-      this.saveGameState();
+      this.autosaveGameState();
     });
 
     this.assistBtns.eraser.btn.addEventListener('click', () => {
@@ -484,6 +495,16 @@ export class GameScreen {
 
     this.controlBtns.reset.addEventListener('click', () => {
       this.actions.playAgain();
+    });
+
+    this.controlBtns.continue.addEventListener('click', () => {
+      const state = this.gameState.get();
+      if (!state) return;
+      this.timerManager.stop();
+
+      this.loadGameState(state);
+      this.grid.restore(state.cells);
+      this.timerManager.start(this.timer);
     });
   }
 

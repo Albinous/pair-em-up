@@ -56,6 +56,12 @@ export class Grid {
     return newCells;
   }
 
+  restore(savedCells) {
+    this.element.replaceChildren();
+    const cells = this.restoreCells(savedCells);
+    this.appendCells(cells);
+  }
+
   getCellById(id) {
     return this.cells.find((cell) => Number(id) === cell.id);
   }
