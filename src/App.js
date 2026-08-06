@@ -29,6 +29,7 @@ export class App {
         start: () => this.showScreen(this.createStartScreen()),
         playAgain: () => {
           localStorage.removeItem('game-state');
+          localStorage.removeItem('autosave-game');
           this.showScreen(this.createGameScreen(title));
         },
         results: () => this.showScreen(this.createResultsScreen()),
