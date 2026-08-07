@@ -127,9 +127,8 @@ export class StartScreen {
     this.buttons.continue.addEventListener('click', () => {
       const state = this.storage.getAuto();
       if (!state) return;
-      console.log(state);
 
-      this.actions[state.mode.toLowerCase()]();
+      this.actions[state.mode]();
     });
   }
 

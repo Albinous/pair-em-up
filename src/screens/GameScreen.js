@@ -71,13 +71,6 @@ export class GameScreen {
     return container;
   }
 
-  createTitle() {
-    return createElement('h1', {
-      classes: ['main-title'],
-      text: `${this.title}`,
-    });
-  }
-
   createScore() {
     this.score = new GameStat({
       title: 'Score: ',

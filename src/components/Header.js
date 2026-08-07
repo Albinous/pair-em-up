@@ -14,7 +14,7 @@ export class Header {
     this.backBtn = new Button({ classes: ['back-btn'], text: 'Back' }).render();
     const title = createElement('h1', {
       classes: ['header-title'],
-      text: `${this.title}`,
+      text: `${this.title[0].toUpperCase()}${this.title.slice(1)}`,
     });
 
     header.append(this.backBtn, title);

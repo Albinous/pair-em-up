@@ -1,3 +1,4 @@
+import { shuffle } from '@/utils/random';
 import { PairValidator } from './PairValidator';
 
 export class AssistManager {
@@ -56,11 +57,7 @@ export class AssistManager {
   }
 
   shuffle() {
-    const values = this.cells.map((cell) => cell.value);
-    for (let i = values.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [values[i], values[j]] = [values[j], values[i]];
-    }
+    const values = shuffle(this.cells.map((cell) => cell.value));
 
     this.cells.forEach((cell, index) => {
       cell.setValue(values[index]);

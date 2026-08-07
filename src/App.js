@@ -14,9 +14,9 @@ export class App {
   createStartScreen() {
     return new StartScreen({
       actions: {
-        classic: () => this.showScreen(this.createGameScreen('Classic')),
-        random: () => this.showScreen(this.createGameScreen('Random')),
-        chaotic: () => this.showScreen(this.createGameScreen('Chaotic')),
+        classic: () => this.showScreen(this.createGameScreen('classic')),
+        random: () => this.showScreen(this.createGameScreen('random')),
+        chaotic: () => this.showScreen(this.createGameScreen('chaotic')),
         settings: () => this.showScreen(this.createSettingsScreen()),
         results: () => this.showScreen(this.createResultsScreen()),
       },
