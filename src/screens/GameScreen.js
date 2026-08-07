@@ -14,8 +14,9 @@ import { TimerManager } from '@/game/Timer';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
-  constructor(title, { actions }) {
+  constructor(title, { restore, actions }) {
     this.title = title;
+    this.restore = restore;
     this.actions = actions;
     this.grid = new Grid();
     this.selectedCells = [];
@@ -47,7 +48,11 @@ export class GameScreen {
 
     subHeader.append(timer, score, moves);
 
-    const state = this.gameState.getAuto();
+    let state = null;
+
+    if (this.restore) {
+      state = this.gameState.getAuto();
+    }
 
     if (state) {
       this.gameGrid = this.createGrid(state.cells, true);

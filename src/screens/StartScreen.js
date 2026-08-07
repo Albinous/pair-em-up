@@ -128,7 +128,7 @@ export class StartScreen {
       const state = this.storage.getAuto();
       if (!state) return;
 
-      this.actions[state.mode]();
+      this.actions[state.mode](true);
     });
   }
 
