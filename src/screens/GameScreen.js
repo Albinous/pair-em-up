@@ -34,7 +34,7 @@ export class GameScreen {
 
   render() {
     const container = createElement('main', {
-      classes: ['game-screen'],
+      classes: ['game-screen', 'container'],
     });
 
     const header = new Header({ title: this.title, start: this.actions.start }).render();

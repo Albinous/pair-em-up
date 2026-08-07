@@ -1,42 +1,54 @@
-import { Button } from '@/components/Button';
+import { Header } from '@/components/Header';
 import { createElement } from '@/utils/dom';
 
 export class ResultsScreen {
-  constructor({ start }) {
-    this.start = start;
+  constructor(title, { actions }) {
+    this.title = title;
+    this.actions = actions;
   }
 
   render() {
     const container = createElement('main', {
-      classes: ['results-screen'],
+      classes: ['results-screen', 'container'],
     });
+    const header = new Header({ title: this.title, start: this.actions.start }).render();
+    const results = this.createResults();
 
-    this.backBtn = new Button({
-      classes: ['back-btn', 'btn'],
-      text: 'Back',
-    }).render();
-
-    const title = this.createTitle();
-
-    container.append(title, this.backBtn);
+    container.append(header, results);
 
     this.bindEvents();
 
     return container;
   }
 
-  createTitle() {
-    return createElement('h1', {
-      classes: ['main-title'],
-      text: `Results`,
+  createResults() {
+    const results = createElement('div', {
+      classes: ['results'],
     });
+
+    const resultsHeader = createElement('div', {
+      classes: ['results-header'],
+    });
+
+    const titles = ['Mode', 'Score', 'Moves', 'Time', 'Date'];
+    const items = titles.map((title) => this.createResultsItem(title));
+    resultsHeader.append(...items);
+
+    results.append(resultsHeader);
+
+    return results;
   }
 
-  bindEvents() {
-    this.backBtn.addEventListener('click', () => {
-      this.start();
+  createResultsItem(title) {
+    const span = createElement('span', {
+      classes: ['results-item'],
+      text: title,
     });
+
+    return span;
   }
+
+  bindEvents() {}
 
   destroy() {}
 }

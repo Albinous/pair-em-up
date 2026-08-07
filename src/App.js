@@ -18,7 +18,7 @@ export class App {
         random: (restore = false) => this.showScreen(this.createGameScreen('random', restore)),
         chaotic: (restore = false) => this.showScreen(this.createGameScreen('chaotic', restore)),
         settings: () => this.showScreen(this.createSettingsScreen()),
-        results: () => this.showScreen(this.createResultsScreen()),
+        results: () => this.showScreen(this.createResultsScreen('results')),
       },
     });
   }
@@ -44,9 +44,11 @@ export class App {
     });
   }
 
-  createResultsScreen() {
-    return new ResultsScreen({
-      start: () => this.showScreen(this.createStartScreen()),
+  createResultsScreen(title) {
+    return new ResultsScreen(title, {
+      actions: {
+        start: () => this.showScreen(this.createStartScreen()),
+      },
     });
   }
 
