@@ -52,8 +52,8 @@ export class GameScreen {
     if (state) {
       this.gameGrid = this.createGrid(state.cells, true);
     } else {
-      const classicNumbers = new GridGenerator().generateClassicNumbers();
-      this.gameGrid = this.createGrid(classicNumbers);
+      const gridNumbers = this.generateGridMode();
+      this.gameGrid = this.createGrid(gridNumbers);
     }
     const assistBtns = this.createAssistBtns();
     const controlBtns = this.createControlBtns();
@@ -100,6 +100,24 @@ export class GameScreen {
     });
 
     return this.moves.render();
+  }
+
+  generateGridMode() {
+    let numbers;
+
+    switch (this.title) {
+      case 'classic':
+        numbers = new GridGenerator().generateClassicNumbers();
+        break;
+      case 'random':
+        numbers = new GridGenerator().generateRandomNumbers();
+        break;
+      case 'chaotic':
+        numbers = new GridGenerator().generateChaoticNumbers();
+        break;
+    }
+
+    return numbers;
   }
 
   createGrid(data, isSaved = false) {
