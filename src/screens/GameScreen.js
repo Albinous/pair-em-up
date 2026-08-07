@@ -482,7 +482,7 @@ export class GameScreen {
     });
 
     this.assistBtns.addNumbers.btn.addEventListener('click', () => {
-      const numbers = this.assistManager.addNumbers();
+      const numbers = this.assistManager.addNumbers(this.title);
       const newCells = this.grid.createCells(numbers);
       this.grid.appendCells(newCells);
       this.updateAddNumbers(--this.addNumbersValue);

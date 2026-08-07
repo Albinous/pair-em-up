@@ -45,7 +45,7 @@ export class AssistManager {
     cell2.unmatch();
   }
 
-  addNumbers() {
+  addNumbers(mode) {
     const remainedCells = [];
 
     for (let i = 0; i < this.cells.length; i++) {
@@ -53,7 +53,7 @@ export class AssistManager {
         remainedCells.push(this.cells[i].value);
       }
     }
-    return remainedCells;
+    return mode === 'classic' ? remainedCells : shuffle(remainedCells);
   }
 
   shuffle() {
