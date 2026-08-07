@@ -1,3 +1,5 @@
+import { shuffle } from '@/utils/random';
+
 export class GridGenerator {
   generateClassicNumbers(start = 1, end = 19) {
     let numbers = [];
@@ -9,6 +11,12 @@ export class GridGenerator {
           .forEach((n) => numbers.push(+n));
       }
     }
+
+    return numbers;
+  }
+
+  generateRandomNumbers() {
+    const numbers = shuffle(this.generateClassicNumbers());
 
     return numbers;
   }
