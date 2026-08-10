@@ -1,0 +1,41 @@
+.results {
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+
+  &-header,
+  &-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    align-items: center;
+    text-align: center;
+    padding: 18px 24px;
+  }
+
+  &-header {
+    font-weight: 700;
+  }
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-row {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    &:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    & span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

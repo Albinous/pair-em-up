@@ -286,13 +286,7 @@ export class GameScreen {
     ];
 
     if (isWin) {
-      const result = {
-        mode: this.title,
-        score: this.score.value,
-        time: this.timer.value,
-        moves: this.moves.value,
-        date: Date.now(),
-      };
+      const result = this.historyResult('Win');
       this.history.saveResult(result);
 
       this.modal.setData('Win', stats);
@@ -318,6 +312,8 @@ export class GameScreen {
     const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
     if (assistEnd || lineEnd) {
+      const result = this.historyResult('Lose');
+      this.history.saveResult(result);
       this.modal.setData('Lose', stats);
       this.modal.show();
       this.timerManager.stop();
@@ -329,6 +325,17 @@ export class GameScreen {
 
       this.autosaveGameState();
     }
+  }
+
+  historyResult(outcome) {
+    return {
+      mode: this.title,
+      score: this.score.value,
+      time: this.timer.value,
+      moves: this.moves.value,
+      outcome,
+      date: Date.now(),
+    };
   }
 
   createControlBtns() {

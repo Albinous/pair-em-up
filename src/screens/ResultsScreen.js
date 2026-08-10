@@ -1,10 +1,12 @@
 import { Header } from '@/components/Header';
+import { HistoryManager } from '@/game/HistoryManager';
 import { createElement } from '@/utils/dom';
 
 export class ResultsScreen {
   constructor(title, { actions }) {
     this.title = title;
     this.actions = actions;
+    this.history = new HistoryManager();
   }
 
   render() {
@@ -30,11 +32,17 @@ export class ResultsScreen {
       classes: ['results-header'],
     });
 
-    const titles = ['Mode', 'Score', 'Moves', 'Time', 'Date'];
+    const titles = ['Mode', 'Score', 'Time', 'Moves', 'Win/Loss'];
     const items = titles.map((title) => this.createResultsItem(title));
     resultsHeader.append(...items);
 
-    results.append(resultsHeader);
+    const resultsBody = createElement('div', {
+      classes: ['results-body'],
+    });
+
+    this.createResultsValue(resultsBody);
+
+    results.append(resultsHeader, resultsBody);
 
     return results;
   }
@@ -46,6 +54,23 @@ export class ResultsScreen {
     });
 
     return span;
+  }
+
+  createResultsValue(row) {
+    const history = this.history.getHistory();
+    history.forEach((obj) => {
+      const container = createElement('div', {
+        classes: ['results-row'],
+      });
+      for (let value in obj) {
+        container.append(
+          createElement('span', {
+            text: obj[value],
+          })
+        );
+      }
+      row.append(container);
+    });
   }
 
   bindEvents() {}
