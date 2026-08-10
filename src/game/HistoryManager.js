@@ -14,7 +14,7 @@ export class HistoryManager {
     const history = this.getHistory();
 
     history.push(result);
-    history.sort((a, b) => b.date - a.date).slice(0, 5);
+    // history.sort((a, b) => b.date - a.date).slice(0, 5);
     this.storage.set(HISTORY_KEY, history);
   }
 

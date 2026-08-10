@@ -28,6 +28,22 @@ export class ResultsScreen {
       classes: ['results'],
     });
 
+    const statistics = this.createStatistics();
+
+    const resultsHeader = this.createResultsHeader();
+
+    const resultsBody = createElement('div', {
+      classes: ['results-body'],
+    });
+
+    this.createResultsValue(resultsBody);
+
+    results.append(statistics, resultsHeader, resultsBody);
+
+    return results;
+  }
+
+  createResultsHeader() {
     const resultsHeader = createElement('div', {
       classes: ['results-header'],
     });
@@ -36,15 +52,36 @@ export class ResultsScreen {
     const items = titles.map((title) => this.createResultsItem(title));
     resultsHeader.append(...items);
 
-    const resultsBody = createElement('div', {
-      classes: ['results-body'],
+    return resultsHeader;
+  }
+
+  createStatistics() {
+    const statistics = createElement('div', {
+      classes: ['results-statistics'],
     });
 
-    this.createResultsValue(resultsBody);
+    const statisticsTitle = createElement('h2', {
+      classes: ['results-statistics__title'],
+      text: 'Statistics',
+    });
 
-    results.append(resultsHeader, resultsBody);
+    const resultsHeader = this.createResultsHeader();
 
-    return results;
+    const history = this.history.getHistory();
+    const container = createElement('div', {
+      classes: ['results-row'],
+    });
+    for (let value in history[0]) {
+      container.append(
+        createElement('span', {
+          text: history[0][value],
+        })
+      );
+    }
+
+    statistics.append(statisticsTitle, resultsHeader, container);
+
+    return statistics;
   }
 
   createResultsItem(title) {
