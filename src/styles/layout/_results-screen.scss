@@ -1,7 +1,14 @@
+@use '../abstracts/variables' as *;
 .results {
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
+
+  &-title {
+    text-align: center;
+    margin: 40px 0;
+    color: $color-surface-light;
+  }
 
   &-header,
   &-row {

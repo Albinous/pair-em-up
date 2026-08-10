@@ -30,15 +30,9 @@ export class ResultsScreen {
 
     const statistics = this.createStatistics();
 
-    const resultsHeader = this.createResultsHeader();
+    const highScore = this.createHighScore();
 
-    const resultsBody = createElement('div', {
-      classes: ['results-body'],
-    });
-
-    this.createResultsValue(resultsBody);
-
-    results.append(statistics, resultsHeader, resultsBody);
+    results.append(statistics, highScore);
 
     return results;
   }
@@ -61,7 +55,7 @@ export class ResultsScreen {
     });
 
     const statisticsTitle = createElement('h2', {
-      classes: ['results-statistics__title'],
+      classes: ['results-title'],
       text: 'Statistics',
     });
 
@@ -71,10 +65,11 @@ export class ResultsScreen {
     const container = createElement('div', {
       classes: ['results-row'],
     });
-    for (let value in history[0]) {
+    const lastResult = history[history.length - 1];
+    for (let value in lastResult) {
       container.append(
         createElement('span', {
-          text: history[0][value],
+          text: lastResult[value],
         })
       );
     }
@@ -82,6 +77,28 @@ export class ResultsScreen {
     statistics.append(statisticsTitle, resultsHeader, container);
 
     return statistics;
+  }
+
+  createHighScore() {
+    const container = createElement('div', {
+      classes: ['results-high'],
+    });
+
+    const title = createElement('h2', {
+      classes: ['results-title'],
+      text: 'High Score',
+    });
+
+    const resultsHeader = this.createResultsHeader();
+
+    const resultsBody = createElement('div', {
+      classes: ['results-body'],
+    });
+    this.createResultsValue(resultsBody);
+
+    container.append(title, resultsHeader, resultsBody);
+
+    return container;
   }
 
   createResultsItem(title) {
@@ -94,8 +111,11 @@ export class ResultsScreen {
   }
 
   createResultsValue(row) {
-    const history = this.history.getHistory();
-    history.forEach((obj) => {
+    const latestGames = this.history.getHistory().slice(-5);
+    const highScoreGames = latestGames
+      .filter((obj) => obj.outcome === 'Win')
+      .sort((a, b) => this.parseTime(a.time) - this.parseTime(b.time));
+    highScoreGames.forEach((obj) => {
       const container = createElement('div', {
         classes: ['results-row'],
       });
@@ -108,6 +128,11 @@ export class ResultsScreen {
       }
       row.append(container);
     });
+  }
+
+  parseTime(time) {
+    const [minutes, seconds] = time.split(':').map(Number);
+    return minutes * 60 + seconds;
   }
 
   bindEvents() {}

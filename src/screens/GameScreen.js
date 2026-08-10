@@ -334,7 +334,6 @@ export class GameScreen {
       time: this.timer.value,
       moves: this.moves.value,
       outcome,
-      date: Date.now(),
     };
   }
 
