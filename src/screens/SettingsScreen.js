@@ -1,42 +1,108 @@
 import { Button } from '@/components/Button';
+import { Header } from '@/components/Header';
 import { createElement } from '@/utils/dom';
 
 export class SettingsScreen {
-  constructor({ start }) {
-    this.start = start;
+  constructor(title, { actions }) {
+    this.title = title;
+    this.actions = actions;
   }
 
   render() {
     const container = createElement('main', {
-      classes: ['settings-screen'],
+      classes: ['settings-screen', 'container'],
     });
 
-    const title = this.createTitle();
+    const header = new Header({ title: this.title, start: this.actions.start }).render();
+    const audio = this.createAudioSection();
 
-    this.backBtn = new Button({
-      classes: ['back-btn', 'btn'],
-      text: 'Back',
-    }).render();
-
-    container.append(title, this.backBtn);
+    container.append(header, audio);
 
     this.bindEvents();
 
     return container;
   }
 
-  createTitle() {
-    return createElement('h1', {
-      classes: ['main-title'],
-      text: `Settings`,
+  createAudioSection() {
+    const container = createElement('div', {
+      classes: ['settings-section'],
     });
+
+    const subtitle = createElement('h2', {
+      classes: ['settings-subtitle'],
+      text: 'Audio',
+    });
+
+    container.append(subtitle);
+
+    const settings = this.settingsValues();
+    settings.audio.forEach((audio) => {
+      container.append(this.createAudioOption(audio.title));
+    });
+
+    return container;
   }
 
-  bindEvents() {
-    this.backBtn.addEventListener('click', () => {
-      this.start();
+  createAudioOption(text) {
+    const container = createElement('div', {
+      classes: ['settings-option'],
     });
+
+    const span = createElement('span', {
+      text,
+    });
+
+    const btn = new Button({
+      classes: ['toggle', 'toggle-active'],
+    }).render();
+
+    const spanCircle = createElement('span', {
+      classes: ['toggle-circle'],
+    });
+
+    btn.append(spanCircle);
+    container.append(span, btn);
+
+    return container;
   }
+
+  settingsValues() {
+    const settings = {
+      audio: [
+        {
+          key: 'selection',
+          title: 'Cell selection / deselection',
+          enabled: true,
+        },
+        {
+          key: 'success',
+          title: 'Successful pair matching',
+          enabled: true,
+        },
+        {
+          key: 'failure',
+          title: 'Invalid pair attempts',
+          enabled: true,
+        },
+        {
+          key: 'assist',
+          title: 'Assist tool usage',
+          enabled: true,
+        },
+        {
+          key: 'game',
+          title: 'Game start and end',
+          enabled: true,
+        },
+      ],
+
+      theme: 'light',
+    };
+
+    return settings;
+  }
+
+  bindEvents() {}
 
   destroy() {}
 }

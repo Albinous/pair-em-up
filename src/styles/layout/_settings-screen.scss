@@ -1,0 +1,65 @@
+.settings {
+  width: min(100% - 32px, 600px);
+  margin: 0 auto;
+  padding: 40px 0;
+
+  &-section {
+    margin-bottom: 32px;
+    padding: 24px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+  }
+
+  &-subtitle {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  &-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #ddd;
+    }
+
+    span {
+      font-size: 16px;
+    }
+  }
+}
+
+.toggle {
+  position: relative;
+  width: 50px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 20px;
+  background-color: #aaa;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &-circle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: transform 0.2s ease;
+  }
+
+  &-active {
+    background-color: #4caf50;
+
+    .toggle-circle {
+      transform: translateX(22px);
+    }
+  }
+}
