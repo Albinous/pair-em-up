@@ -37,23 +37,23 @@ export class SettingsScreen {
 
     const settings = this.settingsValues();
     settings.audio.forEach((audio) => {
-      container.append(this.createAudioOption(audio.title));
+      container.append(this.createAudioOption(audio));
     });
 
     return container;
   }
 
-  createAudioOption(text) {
+  createAudioOption(audio) {
     const container = createElement('div', {
       classes: ['settings-option'],
     });
 
     const span = createElement('span', {
-      text,
+      text: audio.title,
     });
 
     const btn = new Button({
-      classes: ['toggle', 'toggle-active'],
+      classes: ['toggle', ...(audio.enabled ? ['toggle-active'] : [])],
     }).render();
 
     const spanCircle = createElement('span', {
