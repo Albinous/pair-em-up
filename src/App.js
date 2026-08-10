@@ -33,7 +33,7 @@ export class App {
           localStorage.removeItem('autosave-game');
           this.showScreen(this.createGameScreen(title));
         },
-        results: () => this.showScreen(this.createResultsScreen()),
+        results: () => this.showScreen(this.createResultsScreen('results')),
       },
     });
   }

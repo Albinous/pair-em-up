@@ -312,14 +312,14 @@ export class GameScreen {
     const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
     if (assistEnd || lineEnd) {
-      const result = this.historyResult('Lose');
+      const result = this.historyResult('Loss');
       this.history.saveResult(result);
-      this.modal.setData('Lose', stats);
+      this.modal.setData('Loss', stats);
       this.modal.show();
       this.timerManager.stop();
       this.outcome = {
         isFinished: true,
-        title: 'Lose',
+        title: 'Loss',
         stats,
       };
 
