@@ -301,6 +301,7 @@ export class GameScreen {
       };
 
       this.autosaveGameState();
+      this.soundManager.playSound('win');
     }
 
     const assistEnd =
@@ -324,6 +325,7 @@ export class GameScreen {
       };
 
       this.autosaveGameState();
+      this.soundManager.playSound('over');
     }
   }
 
