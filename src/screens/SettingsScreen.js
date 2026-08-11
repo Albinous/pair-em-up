@@ -1,11 +1,14 @@
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
+import { StorageService } from '@/storage/StorageService';
 import { createElement } from '@/utils/dom';
 
 export class SettingsScreen {
   constructor(title, { actions }) {
     this.title = title;
     this.actions = actions;
+    this.storage = new StorageService();
+    this.settings = this.settingsValues();
   }
 
   render() {
@@ -34,9 +37,7 @@ export class SettingsScreen {
     });
 
     container.append(subtitle);
-
-    const settings = this.settingsValues();
-    settings.audio.forEach((audio) => {
+    this.settings.audio.forEach((audio) => {
       container.append(this.createAudioOption(audio));
     });
 
@@ -70,6 +71,10 @@ export class SettingsScreen {
   }
 
   settingsValues() {
+    const settingsStorage = this.storage.get('settings');
+    if (settingsStorage) {
+      return settingsStorage;
+    }
     const settings = {
       audio: [
         {
@@ -102,7 +107,12 @@ export class SettingsScreen {
       theme: 'light',
     };
 
+    this.saveSettings(settings);
     return settings;
+  }
+
+  saveSettings(settings) {
+    this.storage.set('settings', settings);
   }
 
   handleToggleClick(event) {
@@ -110,8 +120,9 @@ export class SettingsScreen {
     if (!toggleBtn) return;
 
     const key = toggleBtn.dataset.key;
-    const audioObj = this.settingsValues().audio.find((setting) => setting.key === key);
+    const audioObj = this.settings.audio.find((setting) => setting.key === key);
     audioObj.enabled = !audioObj.enabled;
+    this.saveSettings(this.settings);
     toggleBtn.classList.toggle('toggle-active');
   }
 
