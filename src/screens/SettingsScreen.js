@@ -163,9 +163,22 @@ export class SettingsScreen {
     toggleBtn.classList.toggle('toggle-active');
   }
 
+  handleThemeClick(event) {
+    const themeBtn = event.target.closest('.theme-btn');
+    if (!themeBtn) return;
+    this.settings.theme = themeBtn.textContent.toLowerCase();
+
+    const activeBtn = this.settingsContainer.querySelector('.theme-btn__active');
+    if (activeBtn) activeBtn.classList.remove('theme-btn__active');
+
+    themeBtn.classList.add('theme-btn__active');
+    this.saveSettings(this.settings);
+  }
+
   bindEvents() {
     this.settingsContainer.addEventListener('click', (event) => {
       this.handleToggleClick(event);
+      this.handleThemeClick(event);
     });
   }
 
