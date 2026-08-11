@@ -63,3 +63,33 @@
     }
   }
 }
+
+.theme {
+  display: flex;
+  gap: 12px;
+
+  &-btn {
+    flex: 1;
+
+    padding: 12px 20px;
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    background: transparent;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+
+    &__active {
+      background-color: #333;
+      color: #fff;
+      border-color: #333;
+    }
+  }
+}

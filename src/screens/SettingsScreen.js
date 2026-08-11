@@ -17,8 +17,9 @@ export class SettingsScreen {
 
     const header = new Header({ title: this.title, start: this.actions.start }).render();
     const audio = this.createAudioSection();
+    const theme = this.createThemeSection();
 
-    this.settingsContainer.append(header, audio);
+    this.settingsContainer.append(header, audio, theme);
 
     this.bindEvents();
 
@@ -41,6 +42,43 @@ export class SettingsScreen {
     });
 
     return container;
+  }
+
+  createThemeSection() {
+    const container = createElement('div', {
+      classes: ['settings-section'],
+    });
+
+    const subtitle = createElement('h2', {
+      classes: ['settings-subtitle'],
+      text: 'Theme',
+    });
+
+    const theme = this.createTheme();
+
+    container.append(subtitle, theme);
+
+    return container;
+  }
+
+  createTheme() {
+    const theme = createElement('div', {
+      classes: ['theme'],
+    });
+
+    const themeLightBtn = new Button({
+      classes: ['theme-btn', 'theme-btn__active'],
+      text: 'Light',
+    }).render();
+
+    const themeDarkBtn = new Button({
+      classes: ['theme-btn'],
+      text: 'Dark',
+    }).render();
+
+    theme.append(themeLightBtn, themeDarkBtn);
+
+    return theme;
   }
 
   createAudioOption(audio) {
