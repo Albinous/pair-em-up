@@ -9,18 +9,18 @@ export class SettingsScreen {
   }
 
   render() {
-    const container = createElement('main', {
+    this.settingsContainer = createElement('main', {
       classes: ['settings-screen', 'container'],
     });
 
     const header = new Header({ title: this.title, start: this.actions.start }).render();
     const audio = this.createAudioSection();
 
-    container.append(header, audio);
+    this.settingsContainer.append(header, audio);
 
     this.bindEvents();
 
-    return container;
+    return this.settingsContainer;
   }
 
   createAudioSection() {
@@ -54,6 +54,9 @@ export class SettingsScreen {
 
     const btn = new Button({
       classes: ['toggle', ...(audio.enabled ? ['toggle-active'] : [])],
+      attrs: {
+        'data-key': audio.key,
+      },
     }).render();
 
     const spanCircle = createElement('span', {
@@ -102,7 +105,21 @@ export class SettingsScreen {
     return settings;
   }
 
-  bindEvents() {}
+  handleToggleClick(event) {
+    const toggleBtn = event.target.closest('.toggle');
+    if (!toggleBtn) return;
+
+    const key = toggleBtn.dataset.key;
+    const audioObj = this.settingsValues().audio.find((setting) => setting.key === key);
+    audioObj.enabled = !audioObj.enabled;
+    toggleBtn.classList.toggle('toggle-active');
+  }
+
+  bindEvents() {
+    this.settingsContainer.addEventListener('click', (event) => {
+      this.handleToggleClick(event);
+    });
+  }
 
   destroy() {}
 }
