@@ -44,6 +44,32 @@ export class SettingsScreen {
     return container;
   }
 
+  createAudioOption(audio) {
+    const container = createElement('div', {
+      classes: ['settings-option'],
+    });
+
+    const span = createElement('span', {
+      text: audio.title,
+    });
+
+    const btn = new Button({
+      classes: ['toggle', ...(audio.enabled ? ['toggle-active'] : [])],
+      attrs: {
+        'data-key': audio.key,
+      },
+    }).render();
+
+    const spanCircle = createElement('span', {
+      classes: ['toggle-circle'],
+    });
+
+    btn.append(spanCircle);
+    container.append(span, btn);
+
+    return container;
+  }
+
   createThemeSection() {
     const container = createElement('div', {
       classes: ['settings-section'],
@@ -69,42 +95,22 @@ export class SettingsScreen {
     const themeLightBtn = new Button({
       classes: ['theme-btn', 'theme-btn__active'],
       text: 'Light',
+      attrs: {
+        'data-theme': 'light',
+      },
     }).render();
 
     const themeDarkBtn = new Button({
       classes: ['theme-btn'],
       text: 'Dark',
+      attrs: {
+        'data-theme': 'dark',
+      },
     }).render();
 
     theme.append(themeLightBtn, themeDarkBtn);
 
     return theme;
-  }
-
-  createAudioOption(audio) {
-    const container = createElement('div', {
-      classes: ['settings-option'],
-    });
-
-    const span = createElement('span', {
-      text: audio.title,
-    });
-
-    const btn = new Button({
-      classes: ['toggle', ...(audio.enabled ? ['toggle-active'] : [])],
-      attrs: {
-        'data-key': audio.key,
-      },
-    }).render();
-
-    const spanCircle = createElement('span', {
-      classes: ['toggle-circle'],
-    });
-
-    btn.append(spanCircle);
-    container.append(span, btn);
-
-    return container;
   }
 
   settingsValues() {
@@ -166,7 +172,7 @@ export class SettingsScreen {
   handleThemeClick(event) {
     const themeBtn = event.target.closest('.theme-btn');
     if (!themeBtn) return;
-    this.settings.theme = themeBtn.textContent.toLowerCase();
+    this.settings.theme = themeBtn.dataset.theme;
 
     const activeBtn = this.settingsContainer.querySelector('.theme-btn__active');
     if (activeBtn) activeBtn.classList.remove('theme-btn__active');
