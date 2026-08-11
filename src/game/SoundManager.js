@@ -1,24 +1,29 @@
 import selectSound from '@/assets/sounds/select.mp3';
 import errorSound from '@/assets/sounds/error.mp3';
 import successSound from '@/assets/sounds/success.mp3';
-import winSound from '@/assets/sounds/win.mp3';
-import overSound from '@/assets/sounds/game-over.mp3';
+import assistSound from '@/assets/sounds/assist.mp3';
+import startSound from '@/assets/sounds/game-start.mp3';
 
 export class SoundManager {
-  constructor() {
+  constructor(storage) {
     this.sounds = {
-      click: new Audio(selectSound),
-      error: new Audio(errorSound),
+      selection: new Audio(selectSound),
+      failure: new Audio(errorSound),
       success: new Audio(successSound),
-      win: new Audio(winSound),
-      over: new Audio(overSound),
+      assist: new Audio(assistSound),
+      game: new Audio(startSound),
     };
+    this.storage = storage;
   }
 
   playSound(name) {
+    const settings = this.storage.get('settings');
+    const settingsKey = settings.audio.find((setting) => setting.key === name);
     const sound = this.sounds[name];
     if (!sound) return;
     sound.currentTime = 0;
-    sound.play();
+    if (settingsKey.enabled) {
+      sound.play();
+    }
   }
 }

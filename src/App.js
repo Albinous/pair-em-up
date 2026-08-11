@@ -2,10 +2,12 @@ import { StartScreen } from '@/screens/StartScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { GameScreen } from './screens/GameScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
+import { StorageService } from './storage/StorageService';
 
 export class App {
   constructor(root) {
     this.root = root;
+    this.storage = new StorageService();
   }
   init() {
     this.showScreen(this.createStartScreen());
@@ -35,6 +37,7 @@ export class App {
         },
         results: () => this.showScreen(this.createResultsScreen('results')),
       },
+      storage: this.storage,
     });
   }
 
@@ -43,6 +46,7 @@ export class App {
       actions: {
         start: () => this.showScreen(this.createStartScreen()),
       },
+      storage: this.storage,
     });
   }
 

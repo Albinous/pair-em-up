@@ -1,13 +1,12 @@
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
-import { StorageService } from '@/storage/StorageService';
 import { createElement } from '@/utils/dom';
 
 export class SettingsScreen {
-  constructor(title, { actions }) {
+  constructor(title, { actions, storage }) {
     this.title = title;
     this.actions = actions;
-    this.storage = new StorageService();
+    this.storage = storage;
     this.settings = this.settingsValues();
   }
 

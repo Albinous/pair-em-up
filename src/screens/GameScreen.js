@@ -14,15 +14,16 @@ import { TimerManager } from '@/game/Timer';
 import { createElement } from '@/utils/dom';
 
 export class GameScreen {
-  constructor(title, { restore, actions }) {
+  constructor(title, { restore, actions, storage }) {
     this.title = title;
     this.restore = restore;
     this.actions = actions;
+    this.storage = storage;
     this.grid = new Grid();
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
-    this.soundManager = new SoundManager();
+    this.soundManager = new SoundManager(this.storage);
     this.modal = new GameModal({
       actions: this.actions,
     });
@@ -71,6 +72,7 @@ export class GameScreen {
     }
 
     this.timerManager.start(this.timer);
+    this.soundManager.playSound('game');
 
     this.bindEvents();
     return container;
@@ -229,10 +231,11 @@ export class GameScreen {
       cellObject.deselect();
       const index = this.selectedCells.indexOf(cellObject);
       if (index !== -1) this.selectedCells.splice(index, 1);
+      this.soundManager.playSound('selection');
       return;
     }
 
-    this.soundManager.playSound('click');
+    this.soundManager.playSound('selection');
 
     if (this.isErasing) {
       this.assistManager.erase(cellObject);
@@ -255,7 +258,7 @@ export class GameScreen {
     const pairType = validator.checkPair();
 
     if (!pairType) {
-      this.soundManager.playSound('error');
+      this.soundManager.playSound('failure');
       this.selectedCells = [];
       return this.invalidPair(cell1, cell2);
     }
@@ -301,7 +304,7 @@ export class GameScreen {
       };
 
       this.autosaveGameState();
-      this.soundManager.playSound('win');
+      this.soundManager.playSound('game');
     }
 
     const assistEnd =
@@ -325,7 +328,7 @@ export class GameScreen {
       };
 
       this.autosaveGameState();
-      this.soundManager.playSound('over');
+      this.soundManager.playSound('game');
     }
   }
 
@@ -477,13 +480,12 @@ export class GameScreen {
       cells[0].showHint();
       cells[1].showHint();
       this.updateHintCount();
+      this.soundManager.playSound('assist');
       this.autosaveGameState();
     });
 
     this.assistBtns.revert.btn.addEventListener('click', () => {
       if (!this.lastMove) return;
-      console.log(this.lastMove);
-      console.log(this.lastMove.cells);
       this.assistManager.revert(this.lastMove.cells);
       this.moves.setValue(--this.movesCount);
       const scoreValue = this.scoreManager.removeScore(this.lastMove.pairType);
@@ -492,6 +494,7 @@ export class GameScreen {
       this.autosaveGameState();
       this.lastMove = null;
       this.updateRevert();
+      this.soundManager.playSound('assist');
     });
 
     this.assistBtns.addNumbers.btn.addEventListener('click', () => {
@@ -501,6 +504,8 @@ export class GameScreen {
       this.updateAddNumbers(--this.addNumbersValue);
       this.updateHintCount();
       this.checkResult();
+      this.soundManager.playSound('assist');
+
       this.autosaveGameState();
     });
 
@@ -508,11 +513,14 @@ export class GameScreen {
       this.assistManager.shuffle();
       this.updateShuffle(--this.shuffleValue);
       this.updateHintCount();
+      this.soundManager.playSound('assist');
+
       this.autosaveGameState();
     });
 
     this.assistBtns.eraser.btn.addEventListener('click', () => {
       this.isErasing = true;
+      this.soundManager.playSound('assist');
     });
 
     this.controlBtns.save.addEventListener('click', () => {
