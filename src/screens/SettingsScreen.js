@@ -1,6 +1,7 @@
 import { Button } from '@/components/Button';
 import { Header } from '@/components/Header';
 import { createElement } from '@/utils/dom';
+import { defaultSettings } from '@/storage/settings';
 
 export class SettingsScreen {
   constructor(title, { actions, storage }) {
@@ -121,40 +122,9 @@ export class SettingsScreen {
     if (settingsStorage) {
       return settingsStorage;
     }
-    const settings = {
-      audio: [
-        {
-          key: 'selection',
-          title: 'Cell selection / deselection',
-          enabled: true,
-        },
-        {
-          key: 'success',
-          title: 'Successful pair matching',
-          enabled: true,
-        },
-        {
-          key: 'failure',
-          title: 'Invalid pair attempts',
-          enabled: true,
-        },
-        {
-          key: 'assist',
-          title: 'Assist tool usage',
-          enabled: true,
-        },
-        {
-          key: 'game',
-          title: 'Game start and end',
-          enabled: true,
-        },
-      ],
 
-      theme: 'light',
-    };
-
-    this.saveSettings(settings);
-    return settings;
+    this.saveSettings(defaultSettings);
+    return defaultSettings;
   }
 
   saveSettings(settings) {

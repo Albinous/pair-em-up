@@ -3,15 +3,24 @@ import { SettingsScreen } from './screens/SettingsScreen';
 import { GameScreen } from './screens/GameScreen';
 import { ResultsScreen } from './screens/ResultsScreen';
 import { StorageService } from './storage/StorageService';
+import { defaultSettings } from './storage/settings';
 
 export class App {
   constructor(root) {
     this.root = root;
     this.storage = new StorageService();
+
+    this.initSettings();
   }
   init() {
-    this.showScreen(this.createStartScreen());
     this.applyTheme();
+    this.showScreen(this.createStartScreen());
+  }
+
+  initSettings() {
+    const settings = this.storage.get('settings');
+
+    if (!settings) this.storage.set('settings', defaultSettings);
   }
 
   createStartScreen() {

@@ -270,22 +270,7 @@ export class GameScreen {
     ];
 
     if (isWin) {
-      const result = this.historyResult('Win');
-      this.history.saveResult(result);
-
-      this.modal.setData('Win', stats);
-
-      this.modal.show();
-      this.timerManager.stop();
-
-      this.outcome = {
-        isFinished: true,
-        title: 'Win',
-        stats,
-      };
-
-      this.autosaveGameState();
-      this.soundManager.playSound('game');
+      this.handleResult(stats, 'Win');
     }
 
     const assistEnd =
@@ -297,23 +282,30 @@ export class GameScreen {
     const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
     if (assistEnd || lineEnd) {
-      const result = this.historyResult('Loss');
-      this.history.saveResult(result);
-      this.modal.setData('Loss', stats);
-      this.modal.show();
-      this.timerManager.stop();
-      this.outcome = {
-        isFinished: true,
-        title: 'Loss',
-        stats,
-      };
-
-      this.autosaveGameState();
-      this.soundManager.playSound('game');
+      this.handleResult(stats, 'Loss');
     }
   }
 
-  historyResult(outcome) {
+  handleResult(stats, text) {
+    const result = this.createResult(text);
+    this.history.saveResult(result);
+
+    this.modal.setData(text, stats);
+
+    this.modal.show();
+    this.timerManager.stop();
+
+    this.outcome = {
+      isFinished: true,
+      title: text,
+      stats,
+    };
+
+    this.autosaveGameState();
+    this.soundManager.playSound('game');
+  }
+
+  createResult(outcome) {
     return {
       mode: this.title,
       score: this.score.value,
