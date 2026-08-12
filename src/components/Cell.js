@@ -50,10 +50,6 @@ export class Cell {
     this.element.classList.add('disabled');
   }
 
-  showHint() {
-    this.element.classList.add('hint');
-  }
-
   setValue(value) {
     this.value = value;
     this.element.textContent = value;
