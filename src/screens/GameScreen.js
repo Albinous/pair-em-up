@@ -110,21 +110,13 @@ export class GameScreen {
   }
 
   generateGridMode() {
-    let numbers;
+    const generators = {
+      classic: new GridGenerator().generateClassicNumbers(),
+      random: new GridGenerator().generateRandomNumbers(),
+      chaotic: new GridGenerator().generateChaoticNumbers(),
+    };
 
-    switch (this.title) {
-      case 'classic':
-        numbers = new GridGenerator().generateClassicNumbers();
-        break;
-      case 'random':
-        numbers = new GridGenerator().generateRandomNumbers();
-        break;
-      case 'chaotic':
-        numbers = new GridGenerator().generateChaoticNumbers();
-        break;
-    }
-
-    return numbers;
+    return generators[this.title];
   }
 
   createGrid(data, isSaved = false) {
