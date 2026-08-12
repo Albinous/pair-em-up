@@ -134,18 +134,20 @@ export class GameScreen {
       classes: ['game-assist__btns'],
     });
 
-    const hint = this.createAssistBtn('hint', this.hintCount());
-    this.revertValue = 0;
-    this.addNumbersValue = 10;
-    this.shuffleValue = 5;
-    this.eraserValue = 5;
+    this.assistValues = {
+      hint: this.hintCount(),
+      revert: 0,
+      addNumbers: 10,
+      shuffle: 5,
+      eraser: 5,
+    };
 
     this.assistBtns = {
-      hint,
-      revert: this.createAssistBtn('revert', this.revertValue),
-      addNumbers: this.createAssistBtn('add numbers', this.addNumbersValue),
-      shuffle: this.createAssistBtn('shuffle', this.shuffleValue),
-      eraser: this.createAssistBtn('eraser', this.eraserValue),
+      hint: this.createAssistBtn('hint', this.assistValues.hint),
+      revert: this.createAssistBtn('revert', this.assistValues.revert),
+      addNumbers: this.createAssistBtn('add numbers', this.assistValues.addNumbers),
+      shuffle: this.createAssistBtn('shuffle', this.assistValues.shuffle),
+      eraser: this.createAssistBtn('eraser', this.assistValues.eraser),
     };
 
     this.updateRevert();
@@ -184,31 +186,31 @@ export class GameScreen {
     return this.assistManager.countOfAvailableMoves();
   }
 
-  updateHintCount(value = this.hintCount()) {
+  updateHintCount(value = this.assistValues.hint) {
     this.assistBtns.hint.count.textContent = value;
   }
 
   updateRevert(lastMove = this.lastMove) {
-    this.revertValue = Number(Boolean(lastMove));
+    this.assistValues.revert = Number(Boolean(lastMove));
     this.lastMove = lastMove;
-    this.assistBtns.revert.count.textContent = this.revertValue;
-    this.assistBtns.revert.btn.disabled = this.revertValue === 0;
+    this.assistBtns.revert.count.textContent = this.assistValues.revert;
+    this.assistBtns.revert.btn.disabled = this.assistValues.revert === 0;
   }
 
-  updateAddNumbers(value = this.addNumbersValue) {
-    this.addNumbersValue = value;
+  updateAddNumbers(value = this.assistValues.addNumbers) {
+    this.assistValues.addNumbers = value;
     this.assistBtns.addNumbers.count.textContent = value;
     this.assistBtns.addNumbers.btn.disabled = value === 0;
   }
 
-  updateShuffle(value = this.shuffleValue) {
-    this.shuffleValue = value;
+  updateShuffle(value = this.assistValues.shuffle) {
+    this.assistValues.shuffle = value;
     this.assistBtns.shuffle.count.textContent = value;
     this.assistBtns.shuffle.btn.disabled = value === 0;
   }
 
-  updateEraser(value = this.eraserValue) {
-    this.eraserValue = value;
+  updateEraser(value = this.assistValues.eraser) {
+    this.assistValues.eraser = value;
     this.assistBtns.eraser.count.textContent = value;
     this.assistBtns.eraser.btn.disabled = value === 0;
   }
@@ -233,7 +235,7 @@ export class GameScreen {
     if (this.isErasing) {
       this.assistManager.erase(cellObject);
       this.isErasing = false;
-      this.updateEraser(--this.eraserValue);
+      this.updateEraser(--this.assistValues.eraser);
       this.autosaveGameState();
       this.updateHintCount();
       return;
@@ -301,10 +303,10 @@ export class GameScreen {
     }
 
     const assistEnd =
-      this.hintCount() === 0 &&
-      this.addNumbersValue === 0 &&
-      this.shuffleValue === 0 &&
-      this.eraserValue === 0;
+      this.assistValues.hint === 0 &&
+      this.assistValues.addNumbers === 0 &&
+      this.assistValues.shuffle === 0 &&
+      this.assistValues.eraser === 0;
 
     const lineEnd = Math.floor(this.grid.cells.length / 9) > 49;
 
@@ -378,11 +380,11 @@ export class GameScreen {
       : null;
 
     const assists = {
-      hint: this.hintCount(),
-      revert: this.revertValue,
-      addNumbers: this.addNumbersValue,
-      shuffle: this.shuffleValue,
-      eraser: this.eraserValue,
+      hint: this.assistValues.hint,
+      revert: this.assistValues.revert,
+      addNumbers: this.assistValues.addNumbers,
+      shuffle: this.assistValues.shuffle,
+      eraser: this.assistValues.eraser,
     };
 
     const state = {
@@ -495,7 +497,7 @@ export class GameScreen {
       const numbers = this.assistManager.addNumbers(this.title);
       const newCells = this.grid.createCells(numbers);
       this.grid.appendCells(newCells);
-      this.updateAddNumbers(--this.addNumbersValue);
+      this.updateAddNumbers(--this.assistValues.addNumbers);
       this.updateHintCount();
       this.checkResult();
       this.soundManager.playSound('assist');
@@ -505,7 +507,7 @@ export class GameScreen {
 
     this.assistBtns.shuffle.btn.addEventListener('click', () => {
       this.assistManager.shuffle();
-      this.updateShuffle(--this.shuffleValue);
+      this.updateShuffle(--this.assistValues.shuffle);
       this.updateHintCount();
       this.soundManager.playSound('assist');
 
