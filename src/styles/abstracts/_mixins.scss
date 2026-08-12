@@ -11,3 +11,30 @@
   outline: none;
   cursor: pointer;
 }
+
+@mixin mobile {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin small-mobile {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin touch-target($size: 44px) {
+  min-width: $size;
+  min-height: $size;
+}
+
+@mixin mobile-container {
+  width: calc(100% - 24px);
+  margin-inline: auto;
+}
+
+@mixin small-mobile-container {
+  width: calc(100% - 20px);
+  margin-inline: auto;
+}

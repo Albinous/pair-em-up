@@ -1,4 +1,6 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
 .results {
   width: 100%;
   border-radius: 18px;
@@ -42,6 +44,43 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+  }
+}
+
+// adaptive
+
+.results {
+  @include mobile {
+    &-title {
+      margin: 28px 0;
+      font-size: 24px;
+    }
+
+    &-header,
+    &-row {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 14px 8px;
+      font-size: 13px;
+    }
+  }
+
+  @include small-mobile {
+    &-title {
+      margin: 24px 0;
+      font-size: 20px;
+    }
+
+    &-header,
+    &-row {
+      gap: 2px;
+      padding: 12px 4px;
+      font-size: 11px;
+    }
+
+    &-row span {
+      min-width: 0;
     }
   }
 }

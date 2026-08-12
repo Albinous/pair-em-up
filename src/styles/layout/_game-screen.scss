@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 @use '../components/modal';
 
 .game {
@@ -173,6 +174,117 @@
       &:disabled {
         opacity: 0.45;
         cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// adaptive
+
+.game {
+  @include mobile {
+    &-values {
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    &-grid {
+      margin-top: 24px;
+      padding: 12px;
+
+      &__cell {
+        width: clamp(34px, 9vw, 48px);
+        font-size: clamp(1rem, 4vw, 1.3rem);
+
+        &:hover {
+          border-color: #d9d9d9;
+        }
+
+        &:active {
+          transform: scale(0.94);
+        }
+      }
+    }
+
+    &-assist {
+      &__btns {
+        gap: 12px;
+        margin: 28px 0;
+      }
+
+      &__btn {
+        @include touch-target;
+        min-width: 44px;
+        padding: 0 12px;
+        font-size: 14px;
+      }
+    }
+
+    &-control {
+      &__btns {
+        gap: 12px;
+        padding-top: 30px;
+      }
+
+      &__btn {
+        @include touch-target;
+        min-width: 80px;
+        padding: 0 18px;
+      }
+    }
+  }
+
+  @include small-mobile {
+    &-values {
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-size: 13px;
+    }
+
+    &-grid {
+      padding: 8px;
+      border-radius: 8px;
+
+      &__cell {
+        width: 9.2vw;
+        max-width: 40px;
+        min-width: 34px;
+        border-width: 1px;
+        font-size: 1rem;
+      }
+    }
+
+    &-assist {
+      &__btns {
+        gap: 8px;
+        margin: 24px 0;
+      }
+
+      &__btn {
+        min-width: 44px;
+        padding: 0 8px;
+        font-size: 12px;
+      }
+
+      &__count {
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        font-size: 11px;
+      }
+    }
+
+    &-control {
+      &__btns {
+        gap: 8px;
+        padding-top: 24px;
+      }
+
+      &__btn {
+        flex: 1;
+        min-width: 0;
+        padding: 0 12px;
+        font-size: 13px;
       }
     }
   }

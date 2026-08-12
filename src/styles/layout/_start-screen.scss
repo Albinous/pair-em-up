@@ -1,4 +1,5 @@
 @use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 @use 'sass:color';
 
 .start-screen {
@@ -41,20 +42,41 @@
     margin-top: $spacing-lg;
     width: min(100%, 320px);
   }
-}
-.start-screen__accent {
-  color: $color-warning;
-}
 
-.start-screen__subtitle {
-  max-width: 600px;
+  &__author {
+    margin-top: auto;
+    padding-top: 5rem;
 
-  margin-bottom: $spacing-xxl;
+    color: $color-text-muted;
 
-  color: $color-text-secondary;
+    font-size: 0.95rem;
+    text-align: center;
 
-  font-size: 1.4rem;
-  text-align: center;
+    opacity: 0.8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &-link {
+      font-weight: 600;
+
+      color: #918e8e;
+
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &-github {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
 }
 
 .mode {
@@ -90,37 +112,85 @@
   border: 1px solid $color-border;
 }
 
-.start-screen__author {
-  margin-top: auto;
-  padding-top: 5rem;
+// adaptive
 
-  color: $color-text-muted;
+.start-screen {
+  @include mobile {
+    gap: 24px;
+    padding: 24px 16px;
 
-  font-size: 0.95rem;
-  text-align: center;
+    &__title {
+      margin-bottom: 8px;
+      font-size: clamp(2rem, 9vw, 3rem);
+      letter-spacing: 1px;
+    }
 
-  opacity: 0.8;
-  display: flex;
-  gap: 10px;
-  align-items: center;
+    &__buttons,
+    &__secondary {
+      width: min(100%, 320px);
+    }
 
-  &-link {
-    font-weight: 600;
+    &__buttons {
+      gap: 14px;
+    }
 
-    color: #918e8e;
+    &__secondary {
+      gap: 10px;
+      margin-top: 8px;
+    }
 
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    &__subtitle {
+      max-width: 340px;
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+    }
+
+    &__author {
+      padding-top: 2rem;
+      font-size: 0.85rem;
+    }
   }
 
-  &-github {
-    width: 2.5rem;
-    height: 2.5rem;
+  @include small-mobile {
+    gap: 18px;
+    padding: 20px 12px;
+
+    &__title {
+      font-size: clamp(1.8rem, 10vw, 2.4rem);
+    }
+
+    &__subtitle {
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    &__buttons,
+    &__secondary {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    &__author {
+      padding-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 }
 
-.start-screen__author-link:hover {
-  color: $color-primary;
+.mode {
+  &-classic__btn,
+  &-random__btn,
+  &-chaotic__btn,
+  &-continue__btn {
+    @include mobile {
+      @include touch-target(48px);
+    }
+  }
+}
+
+.secondary__btn {
+  @include mobile {
+    @include touch-target;
+  }
 }
