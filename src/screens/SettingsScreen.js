@@ -21,6 +21,8 @@ export class SettingsScreen {
 
     this.settingsContainer.append(header, audio, theme);
 
+    this.loadTheme();
+
     this.bindEvents();
 
     return this.settingsContainer;
@@ -93,7 +95,7 @@ export class SettingsScreen {
     });
 
     const themeLightBtn = new Button({
-      classes: ['theme-btn', 'theme-btn__active'],
+      classes: ['theme-btn'],
       text: 'Light',
       attrs: {
         'data-theme': 'light',
@@ -179,6 +181,15 @@ export class SettingsScreen {
 
     themeBtn.classList.add('theme-btn__active');
     this.saveSettings(this.settings);
+  }
+
+  loadTheme() {
+    const themeBtn = this.settingsContainer.querySelector(`[data-theme=${this.settings.theme}]`);
+    const activeThemeBtn = this.settingsContainer.querySelector('.theme-btn__active');
+
+    if (activeThemeBtn) activeThemeBtn.classList.remove('theme-btn__active');
+
+    if (themeBtn) themeBtn.classList.add('theme-btn__active');
   }
 
   bindEvents() {
