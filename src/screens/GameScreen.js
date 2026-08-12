@@ -20,6 +20,7 @@ export class GameScreen {
     this.actions = actions;
     this.storage = storage;
     this.grid = new Grid();
+    this.gridGenerator = new GridGenerator();
     this.selectedCells = [];
     this.scoreManager = new ScoreManager();
     this.timerManager = new TimerManager();
@@ -111,9 +112,9 @@ export class GameScreen {
 
   generateGridMode() {
     const generators = {
-      classic: new GridGenerator().generateClassicNumbers(),
-      random: new GridGenerator().generateRandomNumbers(),
-      chaotic: new GridGenerator().generateChaoticNumbers(),
+      classic: this.gridGenerator.generateClassicNumbers(),
+      random: this.gridGenerator.generateRandomNumbers(),
+      chaotic: this.gridGenerator.generateChaoticNumbers(),
     };
 
     return generators[this.title];
