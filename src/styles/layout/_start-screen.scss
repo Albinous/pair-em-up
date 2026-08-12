@@ -12,7 +12,7 @@
 
   padding: $spacing-xl;
 
-  background: $color-background;
+  // background: $light-bg;
 
   &__title {
     margin-bottom: $spacing-md;
@@ -22,7 +22,7 @@
     letter-spacing: 2px;
     text-align: center;
 
-    color: $color-text-primary;
+    // color: $light-text;
 
     text-transform: uppercase;
   }
@@ -111,7 +111,7 @@
   &-link {
     font-weight: 600;
 
-    color: $color-text-primary;
+    color: #918e8e;
 
     transition: color 0.2s;
     display: flex;

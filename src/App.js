@@ -11,6 +11,7 @@ export class App {
   }
   init() {
     this.showScreen(this.createStartScreen());
+    this.applyTheme();
   }
 
   createStartScreen() {
@@ -60,5 +61,10 @@ export class App {
 
   showScreen(screen) {
     this.root.replaceChildren(screen.render());
+  }
+
+  applyTheme() {
+    const settings = this.storage.get('settings');
+    document.body.dataset.theme = settings.theme;
   }
 }

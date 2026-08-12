@@ -1,3 +1,5 @@
+@use '../abstracts//variables' as *;
+
 .settings {
   width: min(100% - 32px, 600px);
   margin: 0 auto;
@@ -81,15 +83,23 @@
     font-size: 16px;
 
     cursor: pointer;
+    color: #999999;
 
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
 
+    &:hover {
+      background-color: #f2eeee;
+    }
+
     &__active {
-      background-color: #333;
+      background-color: $color-classic;
       color: #fff;
-      border-color: #333;
+      border-color: $color-primary;
+      &:hover {
+        background-color: $color-classic;
+      }
     }
   }
 }

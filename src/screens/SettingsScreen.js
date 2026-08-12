@@ -22,6 +22,7 @@ export class SettingsScreen {
     this.settingsContainer.append(header, audio, theme);
 
     this.loadTheme();
+    this.applyTheme();
 
     this.bindEvents();
 
@@ -181,6 +182,7 @@ export class SettingsScreen {
 
     themeBtn.classList.add('theme-btn__active');
     this.saveSettings(this.settings);
+    this.applyTheme();
   }
 
   loadTheme() {
@@ -190,6 +192,10 @@ export class SettingsScreen {
     if (activeThemeBtn) activeThemeBtn.classList.remove('theme-btn__active');
 
     if (themeBtn) themeBtn.classList.add('theme-btn__active');
+  }
+
+  applyTheme() {
+    document.body.dataset.theme = this.settings.theme;
   }
 
   bindEvents() {
