@@ -444,16 +444,23 @@ export class GameScreen {
     return false;
   }
 
-  bindEvents() {
+  handleAssistUsed() {
+    this.updateHintCount();
+    this.soundManager.playSound('assist');
+    this.autosaveGameState();
+  }
+
+  bindGridEvents() {
     this.gameGrid.addEventListener('click', (event) => {
       this.selectCells(event);
     });
+  }
+
+  bindAssistEvents() {
     this.assistBtns.hint.element.addEventListener('click', () => {
       const cells = this.assistManager.hint();
       if (!cells) return;
-      this.updateHintCount();
-      this.soundManager.playSound('assist');
-      this.autosaveGameState();
+      this.handleAssistUsed();
     });
 
     this.assistBtns.revert.btn.addEventListener('click', () => {
@@ -462,11 +469,9 @@ export class GameScreen {
       this.moves.setValue(--this.movesCount);
       const scoreValue = this.scoreManager.removeScore(this.lastMove.pairType);
       this.score.setValue(scoreValue);
-      this.updateHintCount();
-      this.autosaveGameState();
+      this.handleAssistUsed();
       this.lastMove = null;
       this.updateRevert();
-      this.soundManager.playSound('assist');
     });
 
     this.assistBtns.addNumbers.btn.addEventListener('click', () => {
@@ -474,27 +479,23 @@ export class GameScreen {
       const newCells = this.grid.createCells(numbers);
       this.grid.appendCells(newCells);
       this.updateAssistButton('addNumbers', --this.assistValues.addNumbers);
-      this.updateHintCount();
+      this.handleAssistUsed();
       this.checkResult();
-      this.soundManager.playSound('assist');
-
-      this.autosaveGameState();
     });
 
     this.assistBtns.shuffle.btn.addEventListener('click', () => {
       this.assistManager.shuffle();
       this.updateAssistButton('shuffle', --this.assistValues.shuffle);
-      this.updateHintCount();
-      this.soundManager.playSound('assist');
-
-      this.autosaveGameState();
+      this.handleAssistUsed();
     });
 
     this.assistBtns.eraser.btn.addEventListener('click', () => {
       this.isErasing = true;
       this.soundManager.playSound('assist');
     });
+  }
 
+  bindControlEvents() {
     this.controlBtns.save.addEventListener('click', () => {
       this.saveGameState();
       this.controlBtns.continue.disabled = false;
@@ -517,6 +518,12 @@ export class GameScreen {
     this.controlBtns.settings.addEventListener('click', () => {
       this.actions.settings();
     });
+  }
+
+  bindEvents() {
+    this.bindGridEvents();
+    this.bindAssistEvents();
+    this.bindControlEvents();
   }
 
   destroy() {}
