@@ -6,14 +6,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  // width: 100%;
   min-height: 58px;
+  color: #fff;
 
   border-radius: $radius-large;
-
-  color: white;
-
   transition:
     transform 0.2s,
     box-shadow 0.2s,
