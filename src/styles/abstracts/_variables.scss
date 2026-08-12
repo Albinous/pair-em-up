@@ -1,3 +1,21 @@
+// Theme colors
+
+$light-bg: #fdfdfd;
+$light-text: #18243d;
+
+$dark-bg: #18243d;
+$dark-text: #ffffff;
+
+[data-theme='light'] {
+  background: $light-bg;
+  color: $light-text;
+}
+
+[data-theme='dark'] {
+  background: $dark-bg;
+  color: $dark-text;
+}
+
 // Backgrounds
 
 $color-background: #0f172a;
