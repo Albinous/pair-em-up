@@ -37,6 +37,7 @@ export class App {
           this.showScreen(this.createGameScreen(title));
         },
         results: () => this.showScreen(this.createResultsScreen('results')),
+        settings: () => this.showScreen(this.createSettingsScreen('settings')),
       },
       storage: this.storage,
     });

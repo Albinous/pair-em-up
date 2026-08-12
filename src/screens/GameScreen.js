@@ -351,6 +351,7 @@ export class GameScreen {
       save: this.createControlBtn('Save'),
       continue: this.createControlBtn('Continue'),
       reset: this.createControlBtn('Reset'),
+      settings: this.createControlBtn('Settings'),
     };
 
     this.controlBtns.continue.disabled = true;
@@ -540,6 +541,10 @@ export class GameScreen {
       this.loadGameState(state);
       this.grid.restore(state.cells);
       this.timerManager.start(this.timer);
+    });
+
+    this.controlBtns.settings.addEventListener('click', () => {
+      this.actions.settings();
     });
   }
 
