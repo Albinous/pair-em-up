@@ -1,0 +1,196 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use 'sass:color';
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  min-height: 100vh;
+
+  padding: $spacing-xl;
+
+  &__title {
+    margin-bottom: $spacing-md;
+
+    font-size: $font-size-title;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-align: center;
+
+    text-transform: uppercase;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+
+    gap: $spacing-lg;
+
+    width: min(100%, 320px);
+  }
+
+  &__secondary {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: $spacing-lg;
+
+    margin-top: $spacing-lg;
+    width: min(100%, 320px);
+  }
+
+  &__author {
+    margin-top: auto;
+    padding-top: 5rem;
+
+    color: $color-text-muted;
+
+    font-size: 0.95rem;
+    text-align: center;
+
+    opacity: 0.8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &-link {
+      font-weight: 600;
+
+      color: #918e8e;
+
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &-github {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+.mode {
+  &-classic__btn {
+    background: linear-gradient(
+      180deg,
+      color.adjust($color-classic, $lightness: 6%),
+      $color-classic
+    );
+  }
+  &-random__btn {
+    background: linear-gradient(180deg, color.adjust($color-random, $lightness: 6%), $color-random);
+  }
+  &-chaotic__btn {
+    background: linear-gradient(
+      180deg,
+      color.adjust($color-chaotic, $lightness: 6%),
+      $color-chaotic
+    );
+  }
+  &-continue__btn {
+    background-color: #ffd54f;
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.secondary__btn {
+  background: $color-surface;
+  border: 1px solid $color-border;
+}
+
+// adaptive
+
+.start-screen {
+  @include mobile {
+    gap: 24px;
+    padding: 24px 16px;
+
+    &__title {
+      margin-bottom: 8px;
+      font-size: clamp(2rem, 9vw, 3rem);
+      letter-spacing: 1px;
+    }
+
+    &__buttons,
+    &__secondary {
+      width: min(100%, 320px);
+    }
+
+    &__buttons {
+      gap: 14px;
+    }
+
+    &__secondary {
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    &__subtitle {
+      max-width: 340px;
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+    }
+
+    &__author {
+      padding-top: 2rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  @include small-mobile {
+    gap: 18px;
+    padding: 20px 12px;
+
+    &__title {
+      font-size: clamp(1.8rem, 10vw, 2.4rem);
+    }
+
+    &__subtitle {
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    &__buttons,
+    &__secondary {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    &__author {
+      padding-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}
+
+.mode {
+  &-classic__btn,
+  &-random__btn,
+  &-chaotic__btn,
+  &-continue__btn {
+    @include mobile {
+      @include touch-target(48px);
+    }
+  }
+}
+
+.secondary__btn {
+  @include mobile {
+    @include touch-target;
+  }
+}

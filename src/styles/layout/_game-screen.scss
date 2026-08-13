@@ -1,0 +1,291 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../components/modal';
+
+.game {
+  &-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-timer,
+  &-score,
+  &-moves {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    width: fit-content;
+    margin: 32px auto 0;
+    padding: 20px;
+    background-color: $light-bg;
+    border-radius: 12px;
+
+    &__cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      aspect-ratio: 1;
+
+      font-size: 1.5rem;
+      font-weight: 600;
+
+      background: #fff;
+      border: 2px solid #d9d9d9;
+      color: $light-text;
+
+      cursor: pointer;
+      user-select: none;
+
+      transition:
+        background-color 0.2s,
+        border-color 0.2s;
+
+      &:hover {
+        border-color: #4f8cff;
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+
+      &.hint {
+        background: #ff9c07;
+        color: #fff;
+        border-color: #ff9c07;
+      }
+
+      &.selected {
+        background: #4f8cff;
+        color: #fff;
+        border-color: #4f8cff;
+      }
+      &.matched {
+        background: #5fcf80;
+        color: #fff;
+        border-color: #5fcf80;
+      }
+      &.disabled {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &-assist {
+    &__btns {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    &__item {
+      position: relative;
+    }
+
+    &__btn {
+      min-width: 90px;
+      height: 48px;
+      padding: 0 16px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #3f66d8;
+      color: #fff;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      cursor: pointer;
+      transition: 0.2s ease;
+
+      box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+      &:hover {
+        background: #5478e7;
+      }
+
+      &:active {
+        transform: scale(0.96);
+      }
+
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+
+    &__count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+
+      width: 22px;
+      height: 22px;
+      padding: 0 6px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+
+      background: #ffd54f;
+      color: #222;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+  }
+
+  &-control {
+    &__btns {
+      display: flex;
+      justify-content: center;
+      padding-top: 50px;
+      gap: 40px;
+    }
+
+    &__btn {
+      min-width: 90px;
+      padding: 0 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: none;
+      border-radius: 12px;
+      background: #ffd54f;
+      color: #222;
+      font-weight: 700;
+
+      &:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// adaptive
+
+.game {
+  @include mobile {
+    &-values {
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    &-grid {
+      margin-top: 24px;
+      padding: 12px;
+
+      &__cell {
+        width: clamp(34px, 9vw, 48px);
+        font-size: clamp(1rem, 4vw, 1.3rem);
+
+        &:hover {
+          border-color: #d9d9d9;
+        }
+
+        &:active {
+          transform: scale(0.94);
+        }
+      }
+    }
+
+    &-assist {
+      &__btns {
+        gap: 12px;
+        margin: 28px 0;
+      }
+
+      &__btn {
+        @include touch-target;
+        min-width: 44px;
+        padding: 0 12px;
+        font-size: 14px;
+      }
+    }
+
+    &-control {
+      &__btns {
+        gap: 12px;
+        padding-top: 30px;
+      }
+
+      &__btn {
+        @include touch-target;
+        min-width: 80px;
+        padding: 0 18px;
+      }
+    }
+  }
+
+  @include small-mobile {
+    &-values {
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      font-size: 13px;
+    }
+
+    &-grid {
+      padding: 8px;
+      border-radius: 8px;
+
+      &__cell {
+        width: 9.2vw;
+        max-width: 40px;
+        min-width: 34px;
+        border-width: 1px;
+        font-size: 1rem;
+      }
+    }
+
+    &-assist {
+      &__btns {
+        gap: 8px;
+        margin: 24px 0;
+      }
+
+      &__btn {
+        min-width: 44px;
+        padding: 0 8px;
+        font-size: 12px;
+      }
+
+      &__count {
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        font-size: 11px;
+      }
+    }
+
+    &-control {
+      &__btns {
+        gap: 8px;
+        padding-top: 24px;
+      }
+
+      &__btn {
+        flex: 1;
+        min-width: 0;
+        padding: 0 12px;
+        font-size: 13px;
+      }
+    }
+  }
+}

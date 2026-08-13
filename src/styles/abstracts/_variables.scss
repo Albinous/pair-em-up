@@ -1,0 +1,87 @@
+// Theme colors
+
+$light-bg: #fdfdfd;
+$light-text: #18243d;
+
+$dark-bg: #18243d;
+$dark-text: #ffffff;
+
+[data-theme='light'] {
+  background: $light-bg;
+  color: $light-text;
+}
+
+[data-theme='dark'] {
+  background: $dark-bg;
+  color: $dark-text;
+}
+
+// Backgrounds
+
+$color-background: #0f172a;
+$color-surface: #18243d;
+$color-surface-light: #243552;
+
+// Text
+
+$color-text-primary: #ffffff;
+$color-text-secondary: #b6c2d9;
+$color-text-muted: #7b8aa8;
+
+// Borders
+
+$color-border: rgba(255, 255, 255, 0.08);
+
+// Accent
+
+$color-primary: #3478f6;
+$color-primary-hover: #4d8cff;
+
+// Modes
+
+$color-classic: #2f7df6;
+$color-random: #13b7b1;
+$color-chaotic: #7c4dff;
+
+// States
+
+$color-success: #31c36a;
+$color-error: #ef4444;
+$color-warning: #ffb020;
+
+// _____________________________________
+
+// Shadows
+
+$shadow-small: 0 4px 10px rgba(0, 0, 0, 0.2);
+$shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.3);
+$shadow-large: 0 12px 40px rgba(0, 0, 0, 0.4);
+
+// Border-radius
+$radius-small: 8px;
+$radius-medium: 16px;
+$radius-large: 24px;
+$radius-round: 999px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// container
+$container-width: 1200px;
+$container-padding: 24px;
+
+// Button size
+$button-height: 72px;
+$button-height-small: 52px;
+
+// Font
+$font-family: 'Inter', sans-serif;
+$font-size-title: 4rem;
+$font-size-h2: 2rem;
+$font-size-body: 1rem;
+$font-size-small: 0.875rem;
