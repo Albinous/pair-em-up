@@ -61,7 +61,7 @@ export class PairValidator {
     const lastNumberOfRow = this.isEmptyCells(1, leftId, endRow);
     const firstNumberOfRow = this.isEmptyCells(1, startRow, rightId);
     if (lastNumberOfRow && firstNumberOfRow) {
-      return this.isEmptyCells(1, endRow, startRow);
+      return this.isEmptyCells(1, endRow - 1, startRow + 1);
     }
 
     return false;

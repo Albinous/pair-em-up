@@ -17,6 +17,7 @@ export class Cell {
       text: this.value,
       attrs: {
         'data-id': this.id,
+        'data-row': this.row,
       },
     });
 
